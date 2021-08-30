@@ -22,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button taskA = findViewById(R.id.tsk1);
+        taskA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
+                startActivity(taskDetail);
+            }
+        });
 
 
 
