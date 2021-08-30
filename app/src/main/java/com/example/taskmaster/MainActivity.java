@@ -22,24 +22,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button addTask = findViewById(R.id.btn1);
-        addTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
-                startActivity(addTaskPage);
-            }
-        });
-        Button allTasks = findViewById(R.id.btn2);
-        allTasks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent allTaskPage = new Intent(MainActivity.this, allTasks.class);
-                startActivity(allTaskPage);
-            }
-        });
+
+        // lab26 buttons in homepage
+//        Button addTask = findViewById(R.id.btn1);
+//        addTask.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
+//                startActivity(addTaskPage);
+//            }
+//        });
+//        Button allTasks = findViewById(R.id.btn2);
+//        allTasks.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent allTaskPage = new Intent(MainActivity.this, allTasks.class);
+//                startActivity(allTaskPage);
+//            }
+//        });
 
 
 
