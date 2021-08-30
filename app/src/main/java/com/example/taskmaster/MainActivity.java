@@ -69,6 +69,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button taskB = findViewById(R.id.tsk2);
+        taskB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
+
+                TextView name = findViewById(R.id.tsk2);
+                String userName= name.getText().toString();
+                taskDetail.putExtra("Name", userName);
+                startActivity(taskDetail);
+            }
+        });
+
+        Button taskC = findViewById(R.id.tsk3);
+        taskC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
+
+                TextView name = findViewById(R.id.tsk3);
+                String userName= name.getText().toString();
+                taskDetail.putExtra("Name", userName);
+                startActivity(taskDetail);
+            }
+        });
+
 //
 
     }
