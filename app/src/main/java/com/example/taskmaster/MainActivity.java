@@ -2,6 +2,8 @@ package com.example.taskmaster;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.prefs.PreferenceChangeEvent;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,47 +62,49 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
-        Button taskA = findViewById(R.id.tsk1);
-        taskA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // lab27 commented bellow
 
-                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-
-                TextView name = findViewById(R.id.tsk1);
-                String userName= name.getText().toString();
-                taskDetail.putExtra("Name", userName);
-                startActivity(taskDetail);
-            }
-        });
-
-        Button taskB = findViewById(R.id.tsk2);
-        taskB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-
-                TextView name = findViewById(R.id.tsk2);
-                String userName= name.getText().toString();
-                taskDetail.putExtra("Name", userName);
-                startActivity(taskDetail);
-            }
-        });
-
-        Button taskC = findViewById(R.id.tsk3);
-        taskC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-
-                TextView name = findViewById(R.id.tsk3);
-                String userName= name.getText().toString();
-                taskDetail.putExtra("Name", userName);
-                startActivity(taskDetail);
-            }
-        });
+//        Button taskA = findViewById(R.id.tsk1);
+//        taskA.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
+//
+//                TextView name = findViewById(R.id.tsk1);
+//                String userName= name.getText().toString();
+//                taskDetail.putExtra("Name", userName);
+//                startActivity(taskDetail);
+//            }
+//        });
+//
+//        Button taskB = findViewById(R.id.tsk2);
+//        taskB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
+//
+//                TextView name = findViewById(R.id.tsk2);
+//                String userName= name.getText().toString();
+//                taskDetail.putExtra("Name", userName);
+//                startActivity(taskDetail);
+//            }
+//        });
+//
+//        Button taskC = findViewById(R.id.tsk3);
+//        taskC.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
+//
+//                TextView name = findViewById(R.id.tsk3);
+//                String userName= name.getText().toString();
+//                taskDetail.putExtra("Name", userName);
+//                startActivity(taskDetail);
+//            }
+//        });
 
 
         Button settingButton = findViewById(R.id.settings);
@@ -118,6 +123,18 @@ public class MainActivity extends AppCompatActivity {
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName+ "'s Tasks");
 
+        ArrayList<Task> allTasks = new ArrayList<>();
+        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
+        allTasks.add(new Task("Task B","Solve Today's Code Challenge","New"));
+        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
+        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
+
+
+        RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
+
+        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+       allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
 
     }
