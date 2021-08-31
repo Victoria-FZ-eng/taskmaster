@@ -1,5 +1,12 @@
 # taskmaster
 
+## Lab-28 - 31.Aug
+
+Add Recycler view to the home page and pass the data
+
+![one](./screenshots/28-1.png)
+![two](./screenshots/28-1x.png)
+
 ## Lab-27 - 30.Aug
 
 1. Home Page containing 3 tasks(task buttons) Each button reffering to a task + a settings button.
