@@ -41,11 +41,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         holder.task = allTasks.get(position);
 
-        Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
-//        TextView body = holder.itemView.findViewById(R.id.);
-//        TextView state = holder.itemView.findViewById(R.id.);
+      //  Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
+        TextView title = holder.itemView.findViewById(R.id.fragTitle);
+        TextView body = holder.itemView.findViewById(R.id.fragBody);
+        TextView state = holder.itemView.findViewById(R.id.fragState);
 
         title.setText(holder.task.title);
+        body.setText(holder.task.body);
+        state.setText(holder.task.state);
+      //  title.setId();
 
 
     }
