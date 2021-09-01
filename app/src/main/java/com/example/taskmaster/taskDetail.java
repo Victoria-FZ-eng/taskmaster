@@ -25,6 +25,14 @@ public class taskDetail extends AppCompatActivity {
             String name = intent.getExtras().getString("Name");
             TextView title = findViewById(R.id.titleTask);
             title.setText(name);
+
+            String bodyText = intent.getExtras().getString("Body");
+            TextView body = findViewById(R.id.taskBody);
+            body.setText(bodyText);
+
+            String status = intent.getExtras().getString("State");
+            TextView state = findViewById(R.id.taskState);
+            state.setText(status);
         }
 
     public boolean onOptionsItemSelected(MenuItem item){
