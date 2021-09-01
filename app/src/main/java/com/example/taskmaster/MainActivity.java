@@ -34,15 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // lab26 buttons in homepage
-//        Button addTask = findViewById(R.id.btn1);
-//        addTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
-//                startActivity(addTaskPage);
-//            }
-//        });
+
 //        Button allTasks = findViewById(R.id.btn2);
 //        allTasks.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -105,6 +97,16 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(taskDetail);
 //            }
 //        });
+
+        Button addTask = findViewById(R.id.btn1);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
+                startActivity(addTaskPage);
+            }
+        });
 
 
         Button settingButton = findViewById(R.id.settings);
