@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,10 +17,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.prefs.PreferenceChangeEvent;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    AppDatabase appDatabase;
 
     TextView textView;
     @SuppressLint("RestrictedApi")
@@ -28,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
 
 
         // lab26 buttons in homepage
@@ -125,11 +124,16 @@ public class MainActivity extends AppCompatActivity {
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName+ "'s Tasks");
 
-        ArrayList<Task> allTasks = new ArrayList<>();
-        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
-        allTasks.add(new Task("Task B","Solve Today's Code Challenge","New"));
-        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
-        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
+        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "MainActivity")
+                .allowMainThreadQueries().build();
+
+        List<Task> allTasks= appDatabase.taskDao().getAll();
+
+//        ArrayList<Task> allTasks = new ArrayList<>();
+//        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
+//        allTasks.add(new Task("Task B","Solve Today's Code Challenge","New"));
+//        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
+//        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
 
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
@@ -139,8 +143,15 @@ public class MainActivity extends AppCompatActivity {
        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
 
+
     }
 
+
+    public void TaskListener(Task task){
+        Intent intent = new Intent(MainActivity.this, taskDetail.class);
+        intent.putExtra("details",task.title+" "+task.body+" "+ task.state);
+
+    }
 
 
 }

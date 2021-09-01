@@ -1,6 +1,7 @@
 package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class addTask extends AppCompatActivity {
+    AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +32,29 @@ public class addTask extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        EditText titleText = findViewById(R.id.editTextTextPersonName2);
+        EditText bodyText = findViewById(R.id.editTextTextPersonName3);
+
+        Spinner spinner = findViewById(R.id.spinner);
+        String stateText = spinner.getSelectedItem().toString();
+
+
         Button add = findViewById(R.id.btn3);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"submitted!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Added!",Toast.LENGTH_LONG).show();
+                Task task = new Task(titleText.getText().toString(),bodyText.getText().toString(),stateText);
+                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "MainActivity")
+                        .allowMainThreadQueries().build();
+                TaskDao taskDao = appDatabase.taskDao();
+                taskDao.insertAll(task);
+                Intent backHome = new Intent(addTask.this, MainActivity.class);
+                startActivity(backHome);
             }
         });
 
-        Spinner spinner = findViewById(R.id.spinner);
+       // Spinner spinner = findViewById(R.id.spinner);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("New");
         arrayList.add("Assigned");
