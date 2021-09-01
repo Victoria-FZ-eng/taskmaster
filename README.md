@@ -2,10 +2,19 @@
 
 ## Lab-28 - 31.Aug
 
-Add Recycler view to the home page and pass the data
+1. Add Recycler view to the home page to view multiple tasks as buttons
 
 ![one](./screenshots/28-1.png)
-![two](./screenshots/28-1x.png)
+
+2. When clicking on one of the tasks, it will navigate you to the detail task page and details for the clicked task will be viewd.
+
+When clicking on button Task A
+
+![two](./screenshots/28-2.png)
+
+When clicking on button Task C
+
+![three](./screenshots/28-3.png)
 
 ## Lab-27 - 30.Aug
 
