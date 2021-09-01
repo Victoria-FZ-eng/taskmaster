@@ -1,5 +1,6 @@
 package com.example.taskmaster;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,15 +42,36 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         holder.task = allTasks.get(position);
 
-      //  Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
-        TextView title = holder.itemView.findViewById(R.id.fragTitle);
-        TextView body = holder.itemView.findViewById(R.id.fragBody);
-        TextView state = holder.itemView.findViewById(R.id.fragState);
+        Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
+//        TextView title = holder.itemView.findViewById(R.id.fragTitle);
+//        TextView body = holder.itemView.findViewById(R.id.fragBody);
+//        TextView state = holder.itemView.findViewById(R.id.fragState);
 
         title.setText(holder.task.title);
-        body.setText(holder.task.body);
-        state.setText(holder.task.state);
+//        body.setText(holder.task.body);
+//        state.setText(holder.task.state);
       //  title.setId();
+
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               Intent intentTaskDetail= new Intent(v.getContext(),taskDetail.class);
+
+               TextView taskTitle = title;
+
+
+               String taskTitleStr = taskTitle.getText().toString();
+               intentTaskDetail.putExtra("Name",taskTitleStr);
+               intentTaskDetail.putExtra("Body",holder.task.body);
+               intentTaskDetail.putExtra("State",holder.task.state);
+
+
+                v.getContext().startActivity(intentTaskDetail);
+
+
+            }
+        });
 
 
     }
