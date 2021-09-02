@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class addTask extends AppCompatActivity {
     AppDatabase appDatabase;
+    String selected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +37,33 @@ public class addTask extends AppCompatActivity {
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
 
         Spinner spinner = findViewById(R.id.spinner);
-        String stateText = spinner.getSelectedItem().toString();
-
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("New");
+        arrayList.add("Assigned");
+        arrayList.add("InProgress");
+        arrayList.add("Complete");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String tutorialsName = parent.getItemAtPosition(position).toString();
+                selected=tutorialsName;
+                Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView <?> parent) {
+            }
+        });
 
         Button add = findViewById(R.id.btn3);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Added!",Toast.LENGTH_LONG).show();
-                Task task = new Task(titleText.getText().toString(),bodyText.getText().toString(),stateText);
-                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "MainActivity")
+              //  Toast.makeText(getApplicationContext(),"Added!",Toast.LENGTH_LONG).show();
+                Task task = new Task(titleText.getText().toString(),bodyText.getText().toString(),selected);
+                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
                         .allowMainThreadQueries().build();
                 TaskDao taskDao = appDatabase.taskDao();
                 taskDao.insertAll(task);
@@ -54,25 +72,7 @@ public class addTask extends AppCompatActivity {
             }
         });
 
-       // Spinner spinner = findViewById(R.id.spinner);
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("New");
-        arrayList.add("Assigned");
-        arrayList.add("InProgress");
-        arrayList.add("Complete");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,                         android.R.layout.simple_spinner_item, arrayList);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String tutorialsName = parent.getItemAtPosition(position).toString();
-                Toast.makeText(parent.getContext(), "Selected: " + tutorialsName,          Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView <?> parent) {
-            }
-        });
+
 
     }
     public boolean onOptionsItemSelected(MenuItem item){

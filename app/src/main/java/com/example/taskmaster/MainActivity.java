@@ -53,50 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
-        // lab27 commented bellow
-
-//        Button taskA = findViewById(R.id.tsk1);
-//        taskA.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-//
-//                TextView name = findViewById(R.id.tsk1);
-//                String userName= name.getText().toString();
-//                taskDetail.putExtra("Name", userName);
-//                startActivity(taskDetail);
-//            }
-//        });
-//
-//        Button taskB = findViewById(R.id.tsk2);
-//        taskB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-//
-//                TextView name = findViewById(R.id.tsk2);
-//                String userName= name.getText().toString();
-//                taskDetail.putExtra("Name", userName);
-//                startActivity(taskDetail);
-//            }
-//        });
-//
-//        Button taskC = findViewById(R.id.tsk3);
-//        taskC.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-//
-//                TextView name = findViewById(R.id.tsk3);
-//                String userName= name.getText().toString();
-//                taskDetail.putExtra("Name", userName);
-//                startActivity(taskDetail);
-//            }
-//        });
-
         Button addTask = findViewById(R.id.btn1);
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName+ "'s Tasks");
 
-        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "MainActivity")
+        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
                 .allowMainThreadQueries().build();
 
         List<Task> allTasks= appDatabase.taskDao().getAll();

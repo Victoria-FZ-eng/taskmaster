@@ -27,6 +27,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(@NonNull  View itemView) {
             super(itemView);
             this.itemView=itemView;
+
+            itemView.findViewById(R.id.taskTitleFrag).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intentTaskDetail= new Intent(v.getContext(),taskDetail.class);
+
+                    intentTaskDetail.putExtra("Name",task.title);
+                    intentTaskDetail.putExtra("Body",task.body);
+                    intentTaskDetail.putExtra("State",task.state);
+
+                    v.getContext().startActivity(intentTaskDetail);
+                }
+            });
         }
     }
     @NonNull
@@ -43,36 +57,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.task = allTasks.get(position);
 
         Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
-//        TextView title = holder.itemView.findViewById(R.id.fragTitle);
-//        TextView body = holder.itemView.findViewById(R.id.fragBody);
-//        TextView state = holder.itemView.findViewById(R.id.fragState);
 
         title.setText(holder.task.title);
-//        body.setText(holder.task.body);
-//        state.setText(holder.task.state);
-      //  title.setId();
-
-        title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-               Intent intentTaskDetail= new Intent(v.getContext(),taskDetail.class);
-
-               TextView taskTitle = title;
-
-
-               String taskTitleStr = taskTitle.getText().toString();
-               intentTaskDetail.putExtra("Name",taskTitleStr);
-               intentTaskDetail.putExtra("Body",holder.task.body);
-               intentTaskDetail.putExtra("State",holder.task.state);
-
-
-                v.getContext().startActivity(intentTaskDetail);
-
-
-            }
-        });
-
 
     }
 
