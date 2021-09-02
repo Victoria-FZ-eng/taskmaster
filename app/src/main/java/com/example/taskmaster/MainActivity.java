@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,10 +17,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.prefs.PreferenceChangeEvent;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    AppDatabase appDatabase;
 
     TextView textView;
     @SuppressLint("RestrictedApi")
@@ -30,19 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
-
         // lab26 buttons in homepage
-//        Button addTask = findViewById(R.id.btn1);
-//        addTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
-//                startActivity(addTaskPage);
-//            }
-//        });
+
 //        Button allTasks = findViewById(R.id.btn2);
 //        allTasks.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -62,49 +53,15 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
-        // lab27 commented bellow
+        Button addTask = findViewById(R.id.btn1);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        Button taskA = findViewById(R.id.tsk1);
-//        taskA.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-//
-//                TextView name = findViewById(R.id.tsk1);
-//                String userName= name.getText().toString();
-//                taskDetail.putExtra("Name", userName);
-//                startActivity(taskDetail);
-//            }
-//        });
-//
-//        Button taskB = findViewById(R.id.tsk2);
-//        taskB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-//
-//                TextView name = findViewById(R.id.tsk2);
-//                String userName= name.getText().toString();
-//                taskDetail.putExtra("Name", userName);
-//                startActivity(taskDetail);
-//            }
-//        });
-//
-//        Button taskC = findViewById(R.id.tsk3);
-//        taskC.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent taskDetail = new Intent(MainActivity.this, taskDetail.class);
-//
-//                TextView name = findViewById(R.id.tsk3);
-//                String userName= name.getText().toString();
-//                taskDetail.putExtra("Name", userName);
-//                startActivity(taskDetail);
-//            }
-//        });
+                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
+                startActivity(addTaskPage);
+            }
+        });
 
 
         Button settingButton = findViewById(R.id.settings);
@@ -123,11 +80,16 @@ public class MainActivity extends AppCompatActivity {
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName+ "'s Tasks");
 
-        ArrayList<Task> allTasks = new ArrayList<>();
-        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
-        allTasks.add(new Task("Task B","Solve Today's Code Challenge","New"));
-        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
-        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
+        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+                .allowMainThreadQueries().build();
+
+        List<Task> allTasks= appDatabase.taskDao().getAll();
+
+//        ArrayList<Task> allTasks = new ArrayList<>();
+//        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
+//        allTasks.add(new Task("Task B","Solve Today's Code Challenge","New"));
+//        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
+//        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
 
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
@@ -137,8 +99,15 @@ public class MainActivity extends AppCompatActivity {
        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
 
+
     }
 
+
+    public void TaskListener(Task task){
+        Intent intent = new Intent(MainActivity.this, taskDetail.class);
+        intent.putExtra("details",task.title+" "+task.body+" "+ task.state);
+
+    }
 
 
 }
