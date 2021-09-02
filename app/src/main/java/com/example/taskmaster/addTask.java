@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class addTask extends AppCompatActivity {
     AppDatabase appDatabase;
@@ -32,6 +33,13 @@ public class addTask extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+                .allowMainThreadQueries().build();
+
+        List<Task> allTasks= appDatabase.taskDao().getAll();
+        TextView numberOfTasks = findViewById(R.id.num);
+        numberOfTasks.setText(String.valueOf(allTasks.size()));
 
         EditText titleText = findViewById(R.id.editTextTextPersonName2);
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
