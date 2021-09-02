@@ -1,5 +1,20 @@
 # taskmaster
 
+## Lab-29 - 1.Sep
+
+1. Adding the tasks buttons dynamically based on user's input / notice the total tasks number at the bottom of the scren
+![home](./screenshots/29-1.png)
+![add](./screenshots/29-2.png)
+
+2. Adding The Task info and clicking add will redirect us to home again 
+![home again](./screenshots/29-3.png)
+
+3. By clicking on the newly added assignment
+![Task Details](./screenshots/29-5.png)
+
+4. Navigate to the Add Task page and notice the total task number
+![task num](./screenshots/29-4.png)
+
 ## Lab-28 - 31.Aug
 
 1. Add Recycler view to the home page to view multiple tasks as buttons
