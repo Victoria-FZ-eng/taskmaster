@@ -14,10 +14,12 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.*;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.EnumSet.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
@@ -54,7 +56,9 @@ public class ExampleInstrumentedTest {
     @Test
     public void settingsButton() {
         onView(withId(R.id.settings)).check((matches(isDisplayed()))).perform(click());
+        onView(withId(R.id.enterUserName)).check((matches(isDisplayed()))).perform(typeText("testName"));
         onView(withId(R.id.saveName)).check((matches(isDisplayed()))).perform(click());
+        onView(withText("testName's Tasks")).check(matches(isDisplayed()));
     }
     @Test
     public void addTaskButton() {
