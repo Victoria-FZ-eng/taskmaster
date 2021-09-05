@@ -22,6 +22,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.EnumSet.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -52,7 +54,7 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.recViewTask)).check((matches(isDisplayed())));
         onView(withId(R.id.settings)).check((matches(isDisplayed())));
     }
-    //withText
+    //testing the user's name
     @Test
     public void settingsButton() {
         onView(withId(R.id.settings)).check((matches(isDisplayed()))).perform(click());
@@ -63,23 +65,16 @@ public class ExampleInstrumentedTest {
     @Test
     public void addTaskButton() {
         onView(withId(R.id.btn1)).check((matches(isDisplayed()))).perform(click());
-        onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
+        onView(withId(R.id.editTextTextPersonName2)).check((matches(isDisplayed()))).perform(typeText("TaskTest"));
+        onView(withId(R.id.editTextTextPersonName3)).check((matches(isDisplayed()))).perform(typeText("Testing the adding Task"));
+        onView(withId(R.id.spinner)).check((matches(isDisplayed()))).perform(click());
+        onView(allOf(withId(R.id.spinner), withText("New"))).perform(click());
+       // onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
     }
     @Test
     public void fragTitleButton() {
-        onData(withId(R.id.recViewTask)).perform(click());
+      onView(withText("Task A")).perform(click());
     }
-
-
-//    @Rule
-//    public ActivityScenarioRule<addTask> activityAddTaskRule =
-//            new ActivityScenarioRule<>(addTask.class);
-//
-//    @Test
-//    public void testAddingTask(){
-//        onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
-//    }
-
 
 
 
