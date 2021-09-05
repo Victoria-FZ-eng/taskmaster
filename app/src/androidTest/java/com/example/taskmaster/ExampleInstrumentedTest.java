@@ -54,10 +54,12 @@ public class ExampleInstrumentedTest {
     @Test
     public void settingsButton() {
         onView(withId(R.id.settings)).check((matches(isDisplayed()))).perform(click());
+        onView(withId(R.id.saveName)).check((matches(isDisplayed()))).perform(click());
     }
     @Test
     public void addTaskButton() {
         onView(withId(R.id.btn1)).check((matches(isDisplayed()))).perform(click());
+        onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
     }
     @Test
     public void fragTitleButton() {
@@ -65,14 +67,14 @@ public class ExampleInstrumentedTest {
     }
 
 
-    @Rule
-    public ActivityScenarioRule<addTask> activityAddTaskRule =
-            new ActivityScenarioRule<>(addTask.class);
-
-    @Test
-    public void testAddingTask(){
-        onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
-    }
+//    @Rule
+//    public ActivityScenarioRule<addTask> activityAddTaskRule =
+//            new ActivityScenarioRule<>(addTask.class);
+//
+//    @Test
+//    public void testAddingTask(){
+//        onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
+//    }
 
 
 
