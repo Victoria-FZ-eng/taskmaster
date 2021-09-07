@@ -1,5 +1,6 @@
 package com.example.taskmaster;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +25,7 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.TaskAmplify;
 import com.amplifyframework.datastore.generated.model.Todo;
 
 import java.util.ArrayList;
@@ -98,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
         appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
                 .allowMainThreadQueries().build();
 
-        List<Task> allTasks=new ArrayList<Task>();
+
+
+
+        List<TaskAmplify> allTasks=new ArrayList<>();
 //        List<Task> allTasks= appDatabase.taskDao().getAll();
 
 //        ArrayList<Task> allTasks = new ArrayList<>();
@@ -112,15 +120,25 @@ public class MainActivity extends AppCompatActivity {
         allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
-//        Amplify.API.query(
-//                ModelQuery.list(com.amplifyframework.datastore.generated.model.Todo.class),
-//                response -> {
-//                    for (Task task : response.getData()) {
-//                        Log.i("MyAmplifyApp", todo.getName());
-//                    }
-//                },
-//                error -> Log.e("MyAmplifyApp", "Query failure", error)
-//        );
+        Handler handler = new Handler(Looper.getMainLooper(),
+                new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(@NonNull Message msg) {
+                        allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+                        return false;
+                    }
+                });
+
+        Amplify.API.query(
+                ModelQuery.list(com.amplifyframework.datastore.generated.model.TaskAmplify.class),
+                response -> {
+                    for (TaskAmplify task : response.getData()) {
+                        Log.i("MyAmplifyApp", task.getTitle());
+                        allTasks.add(task);
+                    }
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
 
 
 
