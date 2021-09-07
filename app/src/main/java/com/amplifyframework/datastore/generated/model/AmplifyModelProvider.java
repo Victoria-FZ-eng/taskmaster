@@ -1,4 +1,5 @@
 package com.amplifyframework.datastore.generated.model;
+import com.amplifyframework.datastore.generated.model.AmplifyModelProvider;
 
 import com.amplifyframework.util.Immutable;
 import com.amplifyframework.core.model.Model;

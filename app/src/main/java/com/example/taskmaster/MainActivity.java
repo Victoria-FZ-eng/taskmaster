@@ -29,13 +29,15 @@ import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.TaskAmplify;
 import com.amplifyframework.datastore.generated.model.Todo;
 
+import com.amplifyframework.datastore.generated.model.AmplifyModelProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     //AppDatabase appDatabase;
-    RecyclerView allTasksRecyclerView;
+
 
     TextView textView;
     @SuppressLint("RestrictedApi")
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Amplify.addPlugin(new AWSDataStorePlugin());
+            Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
+        RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
         Handler handler = new Handler(Looper.getMainLooper(),
                 new Handler.Callback() {
                     @Override
@@ -123,23 +127,30 @@ public class MainActivity extends AppCompatActivity {
 //        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
 //        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
 
-
+        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
         Amplify.API.query(
-                ModelQuery.list(com.amplifyframework.datastore.generated.model.TaskAmplify.class),
+                ModelQuery.list(TaskAmplify.class),
                 response -> {
                     for (TaskAmplify task : response.getData()) {
                         Log.i("MyAmplifyApp", task.getTitle());
+                        Log.i("MyAmplifyApp", task.getBody());
+                        Log.i("MyAmplifyApp", task.getState());
+
                         allTasks.add(task);
                         System.out.println(task);
                     }
+
+                    handler.sendEmptyMessage(1);
+                    Log.i("MyAmplifyApp","Out of Loop!");
+                    allTasksRecyclerView.getAdapter().notifyDataSetChanged();
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
 
-       allTasksRecyclerView = findViewById(R.id.recViewTask);
-        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
+
+
 
 
         System.out.println(allTasks);
