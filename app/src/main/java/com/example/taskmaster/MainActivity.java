@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Amplify.addPlugin(new AWSDataStorePlugin());
-            Amplify.addPlugin(new AWSApiPlugin());
+           // Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -96,16 +96,7 @@ public class MainActivity extends AppCompatActivity {
         //appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
           //      .allowMainThreadQueries().build();
 
-        Amplify.DataStore.query(TaskAmplify.class,
-                queryMatches -> {
-                    if (queryMatches.hasNext()) {
-                        Log.i("MyAmplifyApp", "Successful query, found tasks.");
-                    } else {
-                        Log.i("MyAmplifyApp", "Successful query, but no tasks.");
-                    }
-                },
-                error -> Log.e("MyAmplifyApp",  "Error retrieving tasks", error)
-        );
+
 
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
@@ -119,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         List<TaskAmplify> allTasks=new ArrayList<>();
+        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
+
 //        List<Task> allTasks= appDatabase.taskDao().getAll();
 
 //        ArrayList<Task> allTasks = new ArrayList<>();
@@ -127,34 +121,47 @@ public class MainActivity extends AppCompatActivity {
 //        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
 //        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
 
-        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
-        Amplify.API.query(
-                ModelQuery.list(TaskAmplify.class),
-                response -> {
-                    for (TaskAmplify task : response.getData()) {
-                        Log.i("MyAmplifyApp", task.getTitle());
-                        Log.i("MyAmplifyApp", task.getBody());
-                        Log.i("MyAmplifyApp", task.getState());
+        System.out.println(allTasks.size());
+        if (allTasks.size() != 0){
+            Amplify.API.query(
+                    ModelQuery.list(TaskAmplify.class),
+                    response -> {
+                        for (TaskAmplify tasks : response.getData()) {
+                            Log.i("MyAmplifyApp",tasks.getTitle());
+                            Log.i("MyAmplifyApp",tasks.getBody());
+                            Log.i("MyAmplifyApp",tasks.getState());
 
-                        allTasks.add(task);
-                        System.out.println(task);
-                    }
+                            allTasks.add(tasks);
+                            System.out.println(tasks);
+                        }
 
-                    handler.sendEmptyMessage(1);
-                    Log.i("MyAmplifyApp","Out of Loop!");
-                    allTasksRecyclerView.getAdapter().notifyDataSetChanged();
-                },
-                error -> Log.e("MyAmplifyApp", "Query failure", error)
-        );
+                        handler.sendEmptyMessage(1);
+                        Log.i("MyAmplifyApp","Out of Loop!");
+                        allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+                    },
+                    error -> Log.e("MyAmplifyApp", "Query failure", error)
+            );
+
+        }
 
 
 
 
 
         System.out.println(allTasks);
-
+//
+//        Amplify.DataStore.query(TaskAmplify.class,
+//                queryMatches -> {
+//                    if (queryMatches.hasNext()) {
+//                        Log.i("MyAmplifyApp", "Successful query, found tasks.");
+//                    } else {
+//                        Log.i("MyAmplifyApp", "Successful query, but no tasks.");
+//                    }
+//                },
+//                error -> Log.e("MyAmplifyApp",  "Error retrieving tasks", error)
+//        );
+//
     }
 
 

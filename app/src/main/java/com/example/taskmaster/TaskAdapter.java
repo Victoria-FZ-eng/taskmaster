@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    public static List<TaskAmplify> allTasks ;
+    private  List<TaskAmplify> allTasks = new ArrayList<>() ;
 
 
     public TaskAdapter(List<TaskAmplify> allTasks) {
@@ -32,10 +32,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(@NonNull  View itemView) {
             super(itemView);
             this.itemView=itemView;
-
-            System.out.println("-------------------------------------");
-            System.out.println(allTasks);
-            System.out.println("********************************");
 
             itemView.findViewById(R.id.taskTitleFrag).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,6 +64,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
 
         title.setText(holder.task.getTitle());
+        System.out.println("-----------------------");
+        System.out.println(holder.task.getTitle());
 
     }
 

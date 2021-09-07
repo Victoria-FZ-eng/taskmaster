@@ -16,16 +16,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.TaskAmplify;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.amplifyframework.datastore.generated.model.AmplifyModelProvider;
 
 public class addTask extends AppCompatActivity {
     //AppDatabase appDatabase;
     String selected;
-    List<TaskAmplify> allTasks;
+    public List allTasks = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,16 @@ public class addTask extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        try {
+            Amplify.addPlugin(new AWSDataStorePlugin());
+            // Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.configure(getApplicationContext());
+
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+        }
 
     }
     @Override
@@ -44,7 +59,12 @@ public class addTask extends AppCompatActivity {
 
 //        List<TaskAmplify> allTasks= appDatabase.taskDao().getAll();
         TextView numberOfTasks = findViewById(R.id.num);
-        numberOfTasks.setText(String.valueOf(allTasks.size()));
+        if (allTasks.size() != 0){
+            numberOfTasks.setText(String.valueOf(allTasks.size()));
+        }else{
+            numberOfTasks.setText("0");
+        }
+
 
         EditText titleText = findViewById(R.id.editTextTextPersonName2);
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
@@ -80,6 +100,9 @@ public class addTask extends AppCompatActivity {
 //                        .allowMainThreadQueries().build();
 //                TaskDao taskDao = appDatabase.taskDao();
 //                taskDao.insertAll(task);
+                System.out.println("*************************************************");
+                System.out.println("*************************************************");
+                System.out.println("*************************************************");
 
                 TaskAmplify task = TaskAmplify.builder()
                         .title(titleText.getText().toString())
@@ -87,10 +110,12 @@ public class addTask extends AppCompatActivity {
                         .state(selected)
                         .build();
 
-                Amplify.DataStore.save(task,
+                Amplify.API.mutate(
+                        ModelMutation.create(task),
                         result -> Log.i("MyAmplifyApp", "Created a new post successfully"),
                         error -> Log.e("MyAmplifyApp",  "Error creating post", error)
                 );
+                allTasks.add(task);
 
                 Intent backHome = new Intent(addTask.this, MainActivity.class);
                 startActivity(backHome);
