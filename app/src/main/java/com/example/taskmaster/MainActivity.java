@@ -25,6 +25,7 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.TaskAmplify;
 import com.amplifyframework.datastore.generated.model.Todo;
 
@@ -33,7 +34,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    AppDatabase appDatabase;
+    //AppDatabase appDatabase;
+    RecyclerView allTasksRecyclerView;
 
     TextView textView;
     @SuppressLint("RestrictedApi")
@@ -43,22 +45,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        // lab26 buttons in homepage
-
-//        Button allTasks = findViewById(R.id.btn2);
-//        allTasks.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent allTaskPage = new Intent(MainActivity.this, allTasks.class);
-//                startActivity(allTaskPage);
-//            }
-//        });
-
         try {
-            // Add these lines to add the AWSApiPlugin plugins
-            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -72,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_main);
+
+
 
         Button addTask = findViewById(R.id.btn1);
         addTask.setOnClickListener(new View.OnClickListener() {
@@ -100,11 +90,29 @@ public class MainActivity extends AppCompatActivity {
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName+ "'s Tasks");
 
-        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-                .allowMainThreadQueries().build();
+        //appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+          //      .allowMainThreadQueries().build();
+
+        Amplify.DataStore.query(TaskAmplify.class,
+                queryMatches -> {
+                    if (queryMatches.hasNext()) {
+                        Log.i("MyAmplifyApp", "Successful query, found tasks.");
+                    } else {
+                        Log.i("MyAmplifyApp", "Successful query, but no tasks.");
+                    }
+                },
+                error -> Log.e("MyAmplifyApp",  "Error retrieving tasks", error)
+        );
 
 
-
+        Handler handler = new Handler(Looper.getMainLooper(),
+                new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(@NonNull Message msg) {
+                        allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+                        return false;
+                    }
+                });
 
         List<TaskAmplify> allTasks=new ArrayList<>();
 //        List<Task> allTasks= appDatabase.taskDao().getAll();
@@ -116,18 +124,6 @@ public class MainActivity extends AppCompatActivity {
 //        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
 
 
-        RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
-        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-       allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
-
-        Handler handler = new Handler(Looper.getMainLooper(),
-                new Handler.Callback() {
-                    @Override
-                    public boolean handleMessage(@NonNull Message msg) {
-                        allTasksRecyclerView.getAdapter().notifyDataSetChanged();
-                        return false;
-                    }
-                });
 
         Amplify.API.query(
                 ModelQuery.list(com.amplifyframework.datastore.generated.model.TaskAmplify.class),
@@ -135,19 +131,25 @@ public class MainActivity extends AppCompatActivity {
                     for (TaskAmplify task : response.getData()) {
                         Log.i("MyAmplifyApp", task.getTitle());
                         allTasks.add(task);
+                        System.out.println(task);
                     }
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
 
+       allTasksRecyclerView = findViewById(R.id.recViewTask);
+        allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
+
+        System.out.println(allTasks);
 
     }
 
 
-    public void TaskListener(Task task){
+    public void TaskListener(TaskAmplify task){
         Intent intent = new Intent(MainActivity.this, taskDetail.class);
-        intent.putExtra("details",task.title+" "+task.body+" "+ task.state);
+        intent.putExtra("details",task.getTitle()+" "+task.getBody()+" "+ task.getState());
 
     }
 

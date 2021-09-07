@@ -54,7 +54,7 @@ public final class TaskAmplify implements Model {
       return updatedAt;
   }
   
-  private TaskAmplify(String id, String title, String body, String state) {
+  public TaskAmplify(String id, String title, String body, String state) {
     this.id = id;
     this.title = title;
     this.body = body;

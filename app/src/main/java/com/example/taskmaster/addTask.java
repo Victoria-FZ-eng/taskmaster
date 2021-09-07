@@ -5,6 +5,7 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,12 +16,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.TaskAmplify;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class addTask extends AppCompatActivity {
-    AppDatabase appDatabase;
+    //AppDatabase appDatabase;
     String selected;
+    List<TaskAmplify> allTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +39,10 @@ public class addTask extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-                .allowMainThreadQueries().build();
+//        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+//                .allowMainThreadQueries().build();
 
-        List<Task> allTasks= appDatabase.taskDao().getAll();
+//        List<TaskAmplify> allTasks= appDatabase.taskDao().getAll();
         TextView numberOfTasks = findViewById(R.id.num);
         numberOfTasks.setText(String.valueOf(allTasks.size()));
 
@@ -70,11 +75,23 @@ public class addTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               //  Toast.makeText(getApplicationContext(),"Added!",Toast.LENGTH_LONG).show();
-                Task task = new Task(titleText.getText().toString(),bodyText.getText().toString(),selected);
-                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-                        .allowMainThreadQueries().build();
-                TaskDao taskDao = appDatabase.taskDao();
-                taskDao.insertAll(task);
+//                TaskAmplify task = new TaskAmplify(titleText.getText().toString(),bodyText.getText().toString(),selected);
+//                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+//                        .allowMainThreadQueries().build();
+//                TaskDao taskDao = appDatabase.taskDao();
+//                taskDao.insertAll(task);
+
+                TaskAmplify task = TaskAmplify.builder()
+                        .title(titleText.getText().toString())
+                        .body(bodyText.getText().toString())
+                        .state(selected)
+                        .build();
+
+                Amplify.DataStore.save(task,
+                        result -> Log.i("MyAmplifyApp", "Created a new post successfully"),
+                        error -> Log.e("MyAmplifyApp",  "Error creating post", error)
+                );
+
                 Intent backHome = new Intent(addTask.this, MainActivity.class);
                 startActivity(backHome);
             }
