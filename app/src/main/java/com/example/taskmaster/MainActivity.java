@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Todo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
                 .allowMainThreadQueries().build();
 
-        List<Task> allTasks= appDatabase.taskDao().getAll();
+        List<Task> allTasks=new ArrayList<Task>();
+//        List<Task> allTasks= appDatabase.taskDao().getAll();
 
 //        ArrayList<Task> allTasks = new ArrayList<>();
 //        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
@@ -106,10 +109,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
-
         allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
        allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
+
+//        Amplify.API.query(
+//                ModelQuery.list(com.amplifyframework.datastore.generated.model.Todo.class),
+//                response -> {
+//                    for (Task task : response.getData()) {
+//                        Log.i("MyAmplifyApp", todo.getName());
+//                    }
+//                },
+//                error -> Log.e("MyAmplifyApp", "Query failure", error)
+//        );
 
 
 

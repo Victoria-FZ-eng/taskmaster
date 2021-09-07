@@ -22,6 +22,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
 
         public Task task;
+
         View itemView;
 
         public TaskViewHolder(@NonNull  View itemView) {
