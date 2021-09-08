@@ -1,10 +1,10 @@
 package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,12 +15,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amplifyframework.datastore.generated.model.TaskNew;
+
 public class addTask extends AppCompatActivity {
-    AppDatabase appDatabase;
+    //AppDatabase appDatabase;
     String selected;
+  //  public List allTasks = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +35,23 @@ public class addTask extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//
+
     }
     @Override
     protected void onStart() {
         super.onStart();
 
-        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-                .allowMainThreadQueries().build();
+//        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+//                .allowMainThreadQueries().build();
 
-        List<Task> allTasks= appDatabase.taskDao().getAll();
+//        List<TaskAmplify> allTasks= appDatabase.taskDao().getAll();
         TextView numberOfTasks = findViewById(R.id.num);
-        numberOfTasks.setText(String.valueOf(allTasks.size()));
+        Intent intent= getIntent();
+        numberOfTasks.setText(intent.getExtras().getString("number"));
+
+
+
 
         EditText titleText = findViewById(R.id.editTextTextPersonName2);
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
@@ -70,11 +82,30 @@ public class addTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               //  Toast.makeText(getApplicationContext(),"Added!",Toast.LENGTH_LONG).show();
-                Task task = new Task(titleText.getText().toString(),bodyText.getText().toString(),selected);
-                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-                        .allowMainThreadQueries().build();
-                TaskDao taskDao = appDatabase.taskDao();
-                taskDao.insertAll(task);
+//                TaskAmplify task = new TaskAmplify(titleText.getText().toString(),bodyText.getText().toString(),selected);
+//                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
+//                        .allowMainThreadQueries().build();
+//                TaskDao taskDao = appDatabase.taskDao();
+//
+                TaskNew task = TaskNew.builder()
+                        .title(titleText.getText().toString())
+                        .body(bodyText.getText().toString())
+                        .state(selected)
+                        .build();
+               // ModelMutation.create(task);
+
+                System.out.println("-------------------------------------************************");
+                System.out.println(task.getBody());
+                System.out.println("*************************************************");
+
+
+                Amplify.API.mutate(
+                        ModelMutation.create(task),
+                        result -> Log.i("MyAmplifyApp", "Created a new task successfully"),
+                        error -> Log.e("MyAmplifyApp",  "Error creating task", error)
+                );
+              //  allTasks.add(task);
+
                 Intent backHome = new Intent(addTask.this, MainActivity.class);
                 startActivity(backHome);
             }

@@ -5,23 +5,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.amplifyframework.datastore.generated.model.TaskNew;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    List<Task> allTasks = new ArrayList<>();
+    private  List<TaskNew> allTasks = new ArrayList<>() ;
 
-    public TaskAdapter(List<Task> allTasks) {
+
+    public TaskAdapter(List<TaskNew> allTasks) {
         this.allTasks = allTasks;
     }
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
 
-        public Task task;
+
+        public TaskNew task;
+
         View itemView;
 
         public TaskViewHolder(@NonNull  View itemView) {
@@ -34,9 +38,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
                     Intent intentTaskDetail= new Intent(v.getContext(),taskDetail.class);
 
-                    intentTaskDetail.putExtra("Name",task.title);
-                    intentTaskDetail.putExtra("Body",task.body);
-                    intentTaskDetail.putExtra("State",task.state);
+                    intentTaskDetail.putExtra("Name",task.getTitle());
+                    intentTaskDetail.putExtra("Body",task.getBody());
+                    intentTaskDetail.putExtra("State",task.getState());
 
                     v.getContext().startActivity(intentTaskDetail);
                 }
@@ -58,7 +62,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         Button title = holder.itemView.findViewById(R.id.taskTitleFrag);
 
-        title.setText(holder.task.title);
+        title.setText(holder.task.getTitle());
+        System.out.println("-----------------------");
+        System.out.println(holder.task.getTitle());
 
     }
 
