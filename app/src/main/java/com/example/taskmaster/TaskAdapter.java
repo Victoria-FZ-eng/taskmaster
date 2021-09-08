@@ -5,27 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amplifyframework.datastore.generated.model.TaskAmplify;
+import com.amplifyframework.datastore.generated.model.TaskNew;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    private  List<TaskAmplify> allTasks = new ArrayList<>() ;
+    private  List<TaskNew> allTasks = new ArrayList<>() ;
 
 
-    public TaskAdapter(List<TaskAmplify> allTasks) {
+    public TaskAdapter(List<TaskNew> allTasks) {
         this.allTasks = allTasks;
     }
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
 
 
-        public TaskAmplify task;
+        public TaskNew task;
 
         View itemView;
 

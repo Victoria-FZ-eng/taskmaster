@@ -1,7 +1,5 @@
 package com.amplifyframework.datastore.generated.model;
 
-import com.amplifyframework.datastore.generated.model.AmplifyModelProvider;
-
 import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
@@ -18,14 +16,14 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the TaskAmplify type in your schema. */
+/** This is an auto generated class representing the TaskNew type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "TaskAmplifies")
-public final class TaskAmplify implements Model {
-  public static final QueryField ID = field("TaskAmplify", "id");
-  public static final QueryField TITLE = field("TaskAmplify", "title");
-  public static final QueryField BODY = field("TaskAmplify", "body");
-  public static final QueryField STATE = field("TaskAmplify", "state");
+@ModelConfig(pluralName = "TaskNews")
+public final class TaskNew implements Model {
+  public static final QueryField ID = field("TaskNew", "id");
+  public static final QueryField TITLE = field("TaskNew", "title");
+  public static final QueryField BODY = field("TaskNew", "body");
+  public static final QueryField STATE = field("TaskNew", "state");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String", isRequired = true) String body;
@@ -56,7 +54,7 @@ public final class TaskAmplify implements Model {
       return updatedAt;
   }
   
-  public TaskAmplify(String id, String title, String body, String state) {
+  private TaskNew(String id, String title, String body, String state) {
     this.id = id;
     this.title = title;
     this.body = body;
@@ -70,13 +68,13 @@ public final class TaskAmplify implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      TaskAmplify taskAmplify = (TaskAmplify) obj;
-      return ObjectsCompat.equals(getId(), taskAmplify.getId()) &&
-              ObjectsCompat.equals(getTitle(), taskAmplify.getTitle()) &&
-              ObjectsCompat.equals(getBody(), taskAmplify.getBody()) &&
-              ObjectsCompat.equals(getState(), taskAmplify.getState()) &&
-              ObjectsCompat.equals(getCreatedAt(), taskAmplify.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), taskAmplify.getUpdatedAt());
+      TaskNew taskNew = (TaskNew) obj;
+      return ObjectsCompat.equals(getId(), taskNew.getId()) &&
+              ObjectsCompat.equals(getTitle(), taskNew.getTitle()) &&
+              ObjectsCompat.equals(getBody(), taskNew.getBody()) &&
+              ObjectsCompat.equals(getState(), taskNew.getState()) &&
+              ObjectsCompat.equals(getCreatedAt(), taskNew.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), taskNew.getUpdatedAt());
       }
   }
   
@@ -96,7 +94,7 @@ public final class TaskAmplify implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("TaskAmplify {")
+      .append("TaskNew {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("title=" + String.valueOf(getTitle()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
@@ -120,7 +118,7 @@ public final class TaskAmplify implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static TaskAmplify justId(String id) {
+  public static TaskNew justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -130,7 +128,7 @@ public final class TaskAmplify implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new TaskAmplify(
+    return new TaskNew(
       id,
       null,
       null,
@@ -160,7 +158,7 @@ public final class TaskAmplify implements Model {
   
 
   public interface BuildStep {
-    TaskAmplify build();
+    TaskNew build();
     BuildStep id(String id) throws IllegalArgumentException;
   }
   
@@ -171,10 +169,10 @@ public final class TaskAmplify implements Model {
     private String body;
     private String state;
     @Override
-     public TaskAmplify build() {
+     public TaskNew build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new TaskAmplify(
+        return new TaskNew(
           id,
           title,
           body,

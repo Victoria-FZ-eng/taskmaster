@@ -1,7 +1,6 @@
 package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,16 +15,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
-import com.amplifyframework.datastore.generated.model.TaskAmplify;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.amplifyframework.datastore.generated.model.AmplifyModelProvider;
+
+import com.amplifyframework.datastore.generated.model.TaskNew;
 
 public class addTask extends AppCompatActivity {
     //AppDatabase appDatabase;
@@ -39,15 +35,7 @@ public class addTask extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        try {
-//            Amplify.addPlugin(new AWSDataStorePlugin());
-//             Amplify.addPlugin(new AWSApiPlugin());
-//            Amplify.configure(getApplicationContext());
 //
-//            Log.i("MyAmplifyApp", "Initialized Amplify");
-//        } catch (AmplifyException error) {
-//            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
-//        }
 
     }
     @Override
@@ -59,11 +47,10 @@ public class addTask extends AppCompatActivity {
 
 //        List<TaskAmplify> allTasks= appDatabase.taskDao().getAll();
         TextView numberOfTasks = findViewById(R.id.num);
-        if (allTasks.size() != 0){
-            numberOfTasks.setText(String.valueOf(allTasks.size()));
-        }else{
-            numberOfTasks.setText("0");
-        }
+
+        numberOfTasks.setText(String.valueOf(allTasks.size()));
+
+
 
 
         EditText titleText = findViewById(R.id.editTextTextPersonName2);
@@ -100,7 +87,7 @@ public class addTask extends AppCompatActivity {
 //                        .allowMainThreadQueries().build();
 //                TaskDao taskDao = appDatabase.taskDao();
 //
-                TaskAmplify task = TaskAmplify.builder()
+                TaskNew task = TaskNew.builder()
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)

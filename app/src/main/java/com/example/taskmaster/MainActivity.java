@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,10 +25,7 @@ import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
-import com.amplifyframework.datastore.generated.model.TaskAmplify;
-import com.amplifyframework.datastore.generated.model.Todo;
-
-import com.amplifyframework.datastore.generated.model.AmplifyModelProvider;
+import com.amplifyframework.datastore.generated.model.TaskNew;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,41 +105,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        List<TaskAmplify> allTasks=new ArrayList<>();
+        List<TaskNew> allTasks=new ArrayList<>();
         allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
-//        List<Task> allTasks= appDatabase.taskDao().getAll();
-
-//        ArrayList<Task> allTasks = new ArrayList<>();
-//        allTasks.add(new Task("Task A","Solve Today's Lab","In Progress"));
-//        allTasks.add(new Task("Task B","Solve Today's Code Challenge","New"));
-//        allTasks.add(new Task("Task C","Do Reading For Tomorrow's Class ","Completed"));
-//        allTasks.add(new Task("Task D","Do The Learning Journal ","Assigned"));
-
-
         System.out.println(allTasks.size());
-        if (allTasks.size() != 0){
+       // if (allTasks.size() != 0){
             Amplify.API.query(
-                    ModelQuery.list(TaskAmplify.class),
+                    ModelQuery.list(TaskNew.class),
                     response -> {
-                        for (TaskAmplify tasks : response.getData()) {
-                            Log.i("MyAmplifyApp",tasks.getTitle());
-                            Log.i("MyAmplifyApp",tasks.getBody());
-                            Log.i("MyAmplifyApp",tasks.getState());
+                        System.out.println("------------------------------------------------------------------");
+                        System.out.println(response.toString());
+                        for (TaskNew task : response.getData()) {
+                            Log.i("MyAmplifyApp",task.getTitle());
+                            Log.i("MyAmplifyApp",task.getBody());
+                            Log.i("MyAmplifyApp",task.getState());
 
-                            allTasks.add(tasks);
-                            System.out.println(tasks);
+                            allTasks.add(task);
+                            System.out.println(task);
                         }
 
                         handler.sendEmptyMessage(1);
+                      //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
                         Log.i("MyAmplifyApp","Out of Loop!");
-                        allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+
                     },
                     error -> Log.e("MyAmplifyApp", "Query failure", error)
             );
 
-        }
+     //   }
 
 
 
@@ -165,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void TaskListener(TaskAmplify task){
+    public void TaskListener(TaskNew task){
         Intent intent = new Intent(MainActivity.this, taskDetail.class);
         intent.putExtra("details",task.getTitle()+" "+task.getBody()+" "+ task.getState());
 
