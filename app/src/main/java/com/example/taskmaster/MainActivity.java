@@ -32,8 +32,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //AppDatabase appDatabase;
-
 
     TextView textView;
     @SuppressLint("RestrictedApi")
@@ -62,17 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Button addTask = findViewById(R.id.btn1);
-        addTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
-                startActivity(addTaskPage);
-            }
-        });
-
-
         Button settingButton = findViewById(R.id.settings);
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName+ "'s Tasks");
-
-        //appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-          //      .allowMainThreadQueries().build();
-
-
-
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
         Handler handler = new Handler(Looper.getMainLooper(),
@@ -133,25 +114,18 @@ public class MainActivity extends AppCompatActivity {
                     error -> Log.e("MyAmplifyApp", "Query failure", error)
             );
 
-     //   }
+        Button addTask = findViewById(R.id.btn1);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
-
-
+                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
+                addTaskPage.putExtra("number",String.valueOf(allTasks.size()));
+                startActivity(addTaskPage);
+            }
+        });
 
         System.out.println(allTasks);
-//
-//        Amplify.DataStore.query(TaskAmplify.class,
-//                queryMatches -> {
-//                    if (queryMatches.hasNext()) {
-//                        Log.i("MyAmplifyApp", "Successful query, found tasks.");
-//                    } else {
-//                        Log.i("MyAmplifyApp", "Successful query, but no tasks.");
-//                    }
-//                },
-//                error -> Log.e("MyAmplifyApp",  "Error retrieving tasks", error)
-//        );
-//
     }
 
 

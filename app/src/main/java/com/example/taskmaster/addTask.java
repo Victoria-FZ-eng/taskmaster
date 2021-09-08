@@ -26,7 +26,7 @@ import com.amplifyframework.datastore.generated.model.TaskNew;
 public class addTask extends AppCompatActivity {
     //AppDatabase appDatabase;
     String selected;
-    public List allTasks = new ArrayList();
+  //  public List allTasks = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +47,8 @@ public class addTask extends AppCompatActivity {
 
 //        List<TaskAmplify> allTasks= appDatabase.taskDao().getAll();
         TextView numberOfTasks = findViewById(R.id.num);
-
-        numberOfTasks.setText(String.valueOf(allTasks.size()));
+        Intent intent= getIntent();
+        numberOfTasks.setText(intent.getExtras().getString("number"));
 
 
 
@@ -104,7 +104,7 @@ public class addTask extends AppCompatActivity {
                         result -> Log.i("MyAmplifyApp", "Created a new task successfully"),
                         error -> Log.e("MyAmplifyApp",  "Error creating task", error)
                 );
-                allTasks.add(task);
+              //  allTasks.add(task);
 
                 Intent backHome = new Intent(addTask.this, MainActivity.class);
                 startActivity(backHome);
