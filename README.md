@@ -1,5 +1,13 @@
 # taskmaster
 
+## Lab-32 - 8.Sep
+
+Dealing with AWS , Amplify (replacing room database with could from AWS)
+![home](./screenshots/32-1.png)
+![add](./screenshots/32-2.png)
+![home again](./screenshots/32-3.png)
+![Task Details](./screenshots/32-4.png)
+
 ## Lab-31 - 5.Sep
 
 Adding UI test using Espresso API 
