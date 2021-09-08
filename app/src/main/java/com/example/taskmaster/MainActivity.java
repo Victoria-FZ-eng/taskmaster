@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Amplify.addPlugin(new AWSDataStorePlugin());
-           // Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");

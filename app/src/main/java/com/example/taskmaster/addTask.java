@@ -39,15 +39,15 @@ public class addTask extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        try {
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            // Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.configure(getApplicationContext());
-
-            Log.i("MyAmplifyApp", "Initialized Amplify");
-        } catch (AmplifyException error) {
-            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
-        }
+//        try {
+//            Amplify.addPlugin(new AWSDataStorePlugin());
+//             Amplify.addPlugin(new AWSApiPlugin());
+//            Amplify.configure(getApplicationContext());
+//
+//            Log.i("MyAmplifyApp", "Initialized Amplify");
+//        } catch (AmplifyException error) {
+//            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+//        }
 
     }
     @Override
@@ -99,21 +99,23 @@ public class addTask extends AppCompatActivity {
 //                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
 //                        .allowMainThreadQueries().build();
 //                TaskDao taskDao = appDatabase.taskDao();
-//                taskDao.insertAll(task);
-                System.out.println("*************************************************");
-                System.out.println("*************************************************");
-                System.out.println("*************************************************");
-
+//
                 TaskAmplify task = TaskAmplify.builder()
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)
                         .build();
+               // ModelMutation.create(task);
+
+                System.out.println("-------------------------------------************************");
+                System.out.println(task.getBody());
+                System.out.println("*************************************************");
+
 
                 Amplify.API.mutate(
                         ModelMutation.create(task),
-                        result -> Log.i("MyAmplifyApp", "Created a new post successfully"),
-                        error -> Log.e("MyAmplifyApp",  "Error creating post", error)
+                        result -> Log.i("MyAmplifyApp", "Created a new task successfully"),
+                        error -> Log.e("MyAmplifyApp",  "Error creating task", error)
                 );
                 allTasks.add(task);
 
