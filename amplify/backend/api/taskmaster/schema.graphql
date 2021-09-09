@@ -14,22 +14,17 @@ type TaskNew @model
 }
 
 mutation CreateTeam {
-            createTeam(input: { id: "A", name: "Team-A" } ) {
+           t1: createTeam(input: { id: "A", name: "Team-A" } ) {
                 id
-                        name
+                name
             }
-      }
-mutation CreateTeam {
-            createTeam(input: { id: "B", name: "Team-B" } ) {
-                id
-                        name
-            }
-      }
-
-mutation CreateTeam {
-            createTeam(input: { id: "C", name: "Team-C" } ) {
-                id
-                        name
-            }
+           t2:  createTeam(input: { id: "B", name: "Team-B" } ) {
+                               id
+                               name
+                           }
+           t3:  createTeam(input: { id: "C", name: "Team-A" } ) {
+                               id
+                               name
+                           }
       }
 
