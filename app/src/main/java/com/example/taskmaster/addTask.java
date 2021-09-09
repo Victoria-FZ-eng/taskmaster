@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,14 +21,13 @@ import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.amplifyframework.datastore.generated.model.TaskNew;
 
 public class addTask extends AppCompatActivity {
-    //AppDatabase appDatabase;
+
     String selected;
-  //  public List allTasks = new ArrayList();
+    public String team = "not selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,23 +36,15 @@ public class addTask extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//
 
     }
     @Override
     protected void onStart() {
         super.onStart();
 
-//        appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-//                .allowMainThreadQueries().build();
-
-//        List<TaskAmplify> allTasks= appDatabase.taskDao().getAll();
         TextView numberOfTasks = findViewById(R.id.num);
         Intent intent= getIntent();
         numberOfTasks.setText(intent.getExtras().getString("number"));
-
-
-
 
         EditText titleText = findViewById(R.id.editTextTextPersonName2);
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
@@ -77,22 +70,40 @@ public class addTask extends AppCompatActivity {
             }
         });
 
+       // RadioGroup group =(RadioGroup) findViewById(R.id.radio);
+
+        RadioButton teamA =(RadioButton)  findViewById(R.id.radioButtonTeam1);
+        RadioButton teamB = (RadioButton) findViewById(R.id.radioButtonTeam2);
+        RadioButton teamC = (RadioButton) findViewById(R.id.radioButtonTeam3);
+        teamA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = teamA.getText().toString();
+            }
+        });
+        teamB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = teamB.getText().toString();
+            }
+        });
+        teamC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = teamC.getText().toString();
+            }
+        });
+
         Button add = findViewById(R.id.btn3);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Toast.makeText(getApplicationContext(),"Added!",Toast.LENGTH_LONG).show();
-//                TaskAmplify task = new TaskAmplify(titleText.getText().toString(),bodyText.getText().toString(),selected);
-//                appDatabase =  Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasksDatabase")
-//                        .allowMainThreadQueries().build();
-//                TaskDao taskDao = appDatabase.taskDao();
-//
+
                 TaskNew task = TaskNew.builder()
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)
                         .build();
-               // ModelMutation.create(task);
 
                 System.out.println("-------------------------------------************************");
                 System.out.println(task.getBody());
@@ -110,9 +121,6 @@ public class addTask extends AppCompatActivity {
                 startActivity(backHome);
             }
         });
-
-
-
     }
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
