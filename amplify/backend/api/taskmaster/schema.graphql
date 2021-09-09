@@ -13,3 +13,23 @@ type TaskNew @model
   state: String!
 }
 
+mutation CreateTeam {
+            createTeam(input: { id: "A", name: "Team-A" } ) {
+                id
+                        name
+            }
+      }
+mutation CreateTeam {
+            createTeam(input: { id: "B", name: "Team-B" } ) {
+                id
+                        name
+            }
+      }
+
+mutation CreateTeam {
+            createTeam(input: { id: "C", name: "Team-C" } ) {
+                id
+                        name
+            }
+      }
+

@@ -26,6 +26,7 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.TaskNew;
+import com.amplifyframework.datastore.generated.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setContentView(R.layout.activity_main);
+
+
+
 
 
 
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         System.out.println(allTasks);
+
     }
 
 

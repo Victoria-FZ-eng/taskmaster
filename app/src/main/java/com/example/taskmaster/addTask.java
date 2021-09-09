@@ -99,7 +99,7 @@ public class addTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TaskNew task = TaskNew.builder()
+                TaskNew task = TaskNew.builder().teamId("")
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)
