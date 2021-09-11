@@ -131,16 +131,16 @@ public class MainActivity extends AppCompatActivity {
                         for (Task task : team.getTasks()) {
                           //  System.out.println(task.getTitle());
 
-                            if (task.getTeammId() == teamIdFromSettings){
+                            if (task.getTeammId().equals(teamIdFromSettings) ){
                                 Log.i("MyAmplifyApp", task.getTitle());
                             Log.i("MyAmplifyApp", task.getBody());
                             Log.i("MyAmplifyApp", task.getState());
                                 allTasks.add(task);
-                            System.out.println(task);
+                            System.out.println("based on id ----------------: "+task);
 
                             }
                         }
-                        System.out.println("team after log.i: "+team);
+                        System.out.println("team after log.iiiiiiiiiiiii: "+team);
                         System.out.println("tttttttttttttttttttttttttttttttttttttttttttt");
                     }
 
