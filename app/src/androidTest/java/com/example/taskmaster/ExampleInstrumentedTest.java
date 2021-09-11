@@ -59,6 +59,7 @@ public class ExampleInstrumentedTest {
     public void settingsButton() {
         onView(withId(R.id.settings)).check((matches(isDisplayed()))).perform(click());
         onView(withId(R.id.enterUserName)).check((matches(isDisplayed()))).perform(typeText("testName"));
+        onView(withId(R.id.radioButton)).check((matches(isDisplayed()))).perform(click());
         onView(withId(R.id.saveName)).check((matches(isDisplayed()))).perform(click());
         onView(withText("testName's Tasks")).check(matches(isDisplayed()));
     }
@@ -68,6 +69,7 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.editTextTextPersonName2)).check((matches(isDisplayed()))).perform(typeText("TaskTest"));
         onView(withId(R.id.editTextTextPersonName3)).check((matches(isDisplayed()))).perform(typeText("Testing the adding Task"));
         onView(withId(R.id.spinner)).check((matches(isDisplayed()))).perform(click());
+        onView(withId(R.id.radioButtonTeam1)).check((matches(isDisplayed()))).perform(click());
         // check how to select from the spinner
        // onView(allOf(withId(R.id.spinner), withText("New"))).perform(click());
         onView(withId(R.id.btn3)).check((matches(isDisplayed()))).perform(click());
