@@ -95,27 +95,27 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println(allTasks.size());
        // if (allTasks.size() != 0){
-            Amplify.API.query(
-                    ModelQuery.list(Task.class),
-                    response -> {
-                        System.out.println("------------------------------------------------------------------");
-                        System.out.println(response.toString());
-                        for (Task task : response.getData()) {
-                            Log.i("MyAmplifyApp",task.getTitle());
-                            Log.i("MyAmplifyApp",task.getBody());
-                            Log.i("MyAmplifyApp",task.getState());
-
-                            allTasks.add(task);
-                            System.out.println(task);
-                        }
-
-                        handler.sendEmptyMessage(1);
-                      //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
-                        Log.i("MyAmplifyApp","Out of Loop!");
-
-                    },
-                    error -> Log.e("MyAmplifyApp", "Query failure", error)
-            );
+//            Amplify.API.query(
+//                    ModelQuery.list(Task.class),
+//                    response -> {
+//                        System.out.println("------------------------------------------------------------------");
+//                        System.out.println(response.toString());
+//                        for (Task task : response.getData()) {
+//                            Log.i("MyAmplifyApp",task.getTitle());
+//                            Log.i("MyAmplifyApp",task.getBody());
+//                            Log.i("MyAmplifyApp",task.getState());
+//
+//                            allTasks.add(task);
+//                            System.out.println(task);
+//                        }
+//
+//                        handler.sendEmptyMessage(1);
+//                      //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+//                        Log.i("MyAmplifyApp","Out of Loop!");
+//
+//                    },
+//                    error -> Log.e("MyAmplifyApp", "Query failure", error)
+//            );
 
         Button addTask = findViewById(R.id.btn1);
         addTask.setOnClickListener(new View.OnClickListener() {

@@ -98,6 +98,7 @@ public class addTask extends AppCompatActivity {
             public void onClick(View v) {
 
                 Task task = Task.builder()
+                        .teammId(team)
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)

@@ -19,12 +19,15 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the Task type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "Tasks")
+@Index(name = "byTask", fields = {"teammID","title","body","state"})
 public final class Task implements Model {
   public static final QueryField ID = field("Task", "id");
+  public static final QueryField TEAMM_ID = field("Task", "teammID");
   public static final QueryField TITLE = field("Task", "title");
   public static final QueryField BODY = field("Task", "body");
   public static final QueryField STATE = field("Task", "state");
   private final @ModelField(targetType="ID", isRequired = true) String id;
+  private final @ModelField(targetType="ID", isRequired = true) String teammID;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String", isRequired = true) String body;
   private final @ModelField(targetType="String", isRequired = true) String state;
@@ -32,6 +35,10 @@ public final class Task implements Model {
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
+  }
+  
+  public String getTeammId() {
+      return teammID;
   }
   
   public String getTitle() {
@@ -54,8 +61,9 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String body, String state) {
+  private Task(String id, String teammID, String title, String body, String state) {
     this.id = id;
+    this.teammID = teammID;
     this.title = title;
     this.body = body;
     this.state = state;
@@ -70,6 +78,7 @@ public final class Task implements Model {
       } else {
       Task task = (Task) obj;
       return ObjectsCompat.equals(getId(), task.getId()) &&
+              ObjectsCompat.equals(getTeammId(), task.getTeammId()) &&
               ObjectsCompat.equals(getTitle(), task.getTitle()) &&
               ObjectsCompat.equals(getBody(), task.getBody()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
@@ -82,6 +91,7 @@ public final class Task implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
+      .append(getTeammId())
       .append(getTitle())
       .append(getBody())
       .append(getState())
@@ -96,6 +106,7 @@ public final class Task implements Model {
     return new StringBuilder()
       .append("Task {")
       .append("id=" + String.valueOf(getId()) + ", ")
+      .append("teammID=" + String.valueOf(getTeammId()) + ", ")
       .append("title=" + String.valueOf(getTitle()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
@@ -105,7 +116,7 @@ public final class Task implements Model {
       .toString();
   }
   
-  public static TitleStep builder() {
+  public static TeammIdStep builder() {
       return new Builder();
   }
   
@@ -132,16 +143,23 @@ public final class Task implements Model {
       id,
       null,
       null,
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
+      teammID,
       title,
       body,
       state);
   }
+  public interface TeammIdStep {
+    TitleStep teammId(String teammId);
+  }
+  
+
   public interface TitleStep {
     BodyStep title(String title);
   }
@@ -163,8 +181,9 @@ public final class Task implements Model {
   }
   
 
-  public static class Builder implements TitleStep, BodyStep, StateStep, BuildStep {
+  public static class Builder implements TeammIdStep, TitleStep, BodyStep, StateStep, BuildStep {
     private String id;
+    private String teammID;
     private String title;
     private String body;
     private String state;
@@ -174,9 +193,17 @@ public final class Task implements Model {
         
         return new Task(
           id,
+          teammID,
           title,
           body,
           state);
+    }
+    
+    @Override
+     public TitleStep teammId(String teammId) {
+        Objects.requireNonNull(teammId);
+        this.teammID = teammId;
+        return this;
     }
     
     @Override
@@ -212,11 +239,17 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state) {
+    private CopyOfBuilder(String id, String teammId, String title, String body, String state) {
       super.id(id);
-      super.title(title)
+      super.teammId(teammId)
+        .title(title)
         .body(body)
         .state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder teammId(String teammId) {
+      return (CopyOfBuilder) super.teammId(teammId);
     }
     
     @Override
