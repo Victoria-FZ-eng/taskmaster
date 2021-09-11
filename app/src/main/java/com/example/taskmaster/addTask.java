@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class addTask extends AppCompatActivity {
 
     String selected;
-    public String team = "not selected";
+    private String team = "not selected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +76,25 @@ public class addTask extends AppCompatActivity {
         teamA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                team = teamA.getText().toString();
+                System.out.println("Radio Button A -----------------------");
+                team = "A";
             }
         });
         teamB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                team = teamB.getText().toString();
+                System.out.println("Radio Button B -----------------------");
+                team = "B";
             }
         });
         teamC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                team = teamC.getText().toString();
+                System.out.println("Radio Button C -----------------------");
+                team = "C";
             }
         });
+        System.out.println("TEAM: "+ team);
 
         Button add = findViewById(R.id.btn3);
         add.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +111,7 @@ public class addTask extends AppCompatActivity {
                 System.out.println("-------------------------------------************************");
                 System.out.println(task.getBody());
                 System.out.println("*************************************************");
+                System.out.println(team);
 
 
                 Amplify.API.mutate(

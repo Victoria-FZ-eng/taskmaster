@@ -12,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 public class settings extends AppCompatActivity {
 
+    private String team = "not selected";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,28 @@ public class settings extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
+        RadioButton teamA =(RadioButton)  findViewById(R.id.radioButton);
+        RadioButton teamB = (RadioButton) findViewById(R.id.radioButton2);
+        RadioButton teamC = (RadioButton) findViewById(R.id.radioButton3);
+        teamA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = "A";
+            }
+        });
+        teamB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = "B";
+            }
+        });
+        teamC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = "C";
+            }
+        });
 
         Button saveName = findViewById(R.id.saveName);
         saveName.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +59,7 @@ public class settings extends AppCompatActivity {
                 String userName = nameFeild.getText().toString();
 
                 sharedPrefEdit.putString("userName",userName);
+                sharedPrefEdit.putString("Team-Id",team);
                 sharedPrefEdit.apply();
 
                 Intent home = new Intent(settings.this, MainActivity.class);

@@ -24,6 +24,7 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.model.query.Where;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Teamm;
@@ -59,32 +60,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
-        Amplify.API.query(
-                ModelQuery.list(Teamm.class),
-                response -> {
-                    System.out.println("------------------------------------------------------------------");
-                    System.out.println("tttttttttttttttttttttttttttttt");
-                    System.out.println(response.toString());
-                    for (Teamm team : response.getData().getItems()) {
-                        Log.i("MyAmplifyApp", team.getName());
-//                        Log.i("MyAmplifyApp + 1 :", String.valueOf(team.getTasks().get(1)));
-//                        Log.i("MyAmplifyApp + 2 :", String.valueOf(team.getTasks().get(2)));
-//                        Log.i("MyAmplifyApp + 3 :", String.valueOf(team.getTasks().get(3)));
-//                        Log.i("MyAmplifyApp + 0 :", String.valueOf(team.getTasks().get(0)));
-
-                       // allTasks.add(task);
-                        System.out.println("team after log.i: "+team);
-                        System.out.println("tttttttttttttttttttttttttttttttttttttttttttt");
-                    }
-
-                  //  handler.sendEmptyMessage(1);
-                    //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
-                    Log.i("MyAmplifyApp", "Out of Loop!");
-
-                },
-                error -> Log.e("MyAmplifyApp", "Query failure", error)
-        );
-
 
         Button settingButton = findViewById(R.id.settings);
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedName = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedName.getString("userName", "User Name");
+        String teamIdFromSettings = sharedName.getString("Team-Id", "");
+        System.out.println("---------------- "+teamIdFromSettings);
 
         TextView textUserNameTask = findViewById(R.id.tskUser);
         textUserNameTask.setText(userName + "'s Tasks");
@@ -117,28 +94,62 @@ public class MainActivity extends AppCompatActivity {
         allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
         System.out.println(allTasks.size());
-        //if (allTasks.size() != 0) {
-            Amplify.API.query(
-                    ModelQuery.list(Task.class),
-                    response -> {
-                        System.out.println("------------------------------------------------------------------");
-                        System.out.println(response.toString());
-                        for (Task task : response.getData()) {
-                            Log.i("MyAmplifyApp", task.getTitle());
+
+//            Amplify.API.query(
+//                    ModelQuery.list(Task.class
+////                            , Task.TEAMM_ID.gt(teamIdFromSettings)
+//                    ),
+//                    response -> {
+//                        System.out.println("------------------------INSIDE API-QUERY------------------------------------------");
+//                        System.out.println(response.toString());
+//                        for (Task task : response.getData()) {
+//                            if(task.getTeammId() == teamIdFromSettings){
+//                            Log.i("MyAmplifyApp", task.getTitle());
+//                            Log.i("MyAmplifyApp", task.getBody());
+//                            Log.i("MyAmplifyApp", task.getState());
+//
+//                            allTasks.add(task);
+//                            System.out.println(task);}
+//                        }
+//
+//                        handler.sendEmptyMessage(1);
+//                        //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+//                        Log.i("MyAmplifyApp", "Out of Loop!");
+//
+//                    },
+//                    error -> Log.e("MyAmplifyApp", "Query failure", error)
+//            );
+
+        Amplify.API.query(
+                ModelQuery.list(Teamm.class),
+                response -> {
+                    System.out.println("--------INSIDE API-QUERY----------------------------------------------------------");
+                  //  System.out.println("tttttttttttttttttttttttttttttt");
+                    System.out.println(response.toString());
+                    for (Teamm team : response.getData().getItems()) {
+                        Log.i("MyAmplifyApp", team.getName());
+                        for (Task task : team.getTasks()) {
+                          //  System.out.println(task.getTitle());
+
+                            if (task.getTeammId() == teamIdFromSettings){
+                                Log.i("MyAmplifyApp", task.getTitle());
                             Log.i("MyAmplifyApp", task.getBody());
                             Log.i("MyAmplifyApp", task.getState());
-
-                            allTasks.add(task);
+                                allTasks.add(task);
                             System.out.println(task);
+
+                            }
                         }
+                        System.out.println("team after log.i: "+team);
+                        System.out.println("tttttttttttttttttttttttttttttttttttttttttttt");
+                    }
 
-                        handler.sendEmptyMessage(1);
-                        //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
-                        Log.i("MyAmplifyApp", "Out of Loop!");
+                    handler.sendEmptyMessage(1);
+                    Log.i("MyAmplifyApp", "Out of Loop!");
 
-                    },
-                    error -> Log.e("MyAmplifyApp", "Query failure", error)
-            );
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
 
             Button addTask = findViewById(R.id.btn1);
             addTask.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
             System.out.println(allTasks);
 
-       // }
+
     }
 
 
