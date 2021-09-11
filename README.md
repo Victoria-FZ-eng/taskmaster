@@ -1,5 +1,23 @@
 # taskmaster
 
+## Lab-33
+In this lab we used amplify @connection annotations and used queries and mutation , to have 3 hard coded teams , and have the tasks separated.
+
+
+In the settings page the user add his name and the team
+![settings](./screenshots/33-2.png)
+
+In the home page , display tasks based on team selected
+![home-1](./screenshots/33-1.png)
+
+Add task
+![add](./screenshots/33-3.png)
+![add](./screenshots/33-4.png)
+
+View task in task detail
+![detail](./screenshots/33-5.png)
+
+
 ## Lab-32 - 8.Sep
 
 Dealing with AWS , Amplify (replacing room database with could from AWS)

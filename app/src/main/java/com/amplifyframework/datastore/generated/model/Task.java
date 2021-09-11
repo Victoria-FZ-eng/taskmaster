@@ -16,15 +16,18 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the TaskNew type in your schema. */
+/** This is an auto generated class representing the Task type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "TaskNews")
-public final class TaskNew implements Model {
-  public static final QueryField ID = field("TaskNew", "id");
-  public static final QueryField TITLE = field("TaskNew", "title");
-  public static final QueryField BODY = field("TaskNew", "body");
-  public static final QueryField STATE = field("TaskNew", "state");
+@ModelConfig(pluralName = "Tasks")
+@Index(name = "byTask", fields = {"teammID","title","body","state"})
+public final class Task implements Model {
+  public static final QueryField ID = field("Task", "id");
+  public static final QueryField TEAMM_ID = field("Task", "teammID");
+  public static final QueryField TITLE = field("Task", "title");
+  public static final QueryField BODY = field("Task", "body");
+  public static final QueryField STATE = field("Task", "state");
   private final @ModelField(targetType="ID", isRequired = true) String id;
+  private final @ModelField(targetType="ID", isRequired = true) String teammID;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String", isRequired = true) String body;
   private final @ModelField(targetType="String", isRequired = true) String state;
@@ -32,6 +35,10 @@ public final class TaskNew implements Model {
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
+  }
+  
+  public String getTeammId() {
+      return teammID;
   }
   
   public String getTitle() {
@@ -54,8 +61,9 @@ public final class TaskNew implements Model {
       return updatedAt;
   }
   
-  private TaskNew(String id, String title, String body, String state) {
+  private Task(String id, String teammID, String title, String body, String state) {
     this.id = id;
+    this.teammID = teammID;
     this.title = title;
     this.body = body;
     this.state = state;
@@ -68,13 +76,14 @@ public final class TaskNew implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      TaskNew taskNew = (TaskNew) obj;
-      return ObjectsCompat.equals(getId(), taskNew.getId()) &&
-              ObjectsCompat.equals(getTitle(), taskNew.getTitle()) &&
-              ObjectsCompat.equals(getBody(), taskNew.getBody()) &&
-              ObjectsCompat.equals(getState(), taskNew.getState()) &&
-              ObjectsCompat.equals(getCreatedAt(), taskNew.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), taskNew.getUpdatedAt());
+      Task task = (Task) obj;
+      return ObjectsCompat.equals(getId(), task.getId()) &&
+              ObjectsCompat.equals(getTeammId(), task.getTeammId()) &&
+              ObjectsCompat.equals(getTitle(), task.getTitle()) &&
+              ObjectsCompat.equals(getBody(), task.getBody()) &&
+              ObjectsCompat.equals(getState(), task.getState()) &&
+              ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
       }
   }
   
@@ -82,6 +91,7 @@ public final class TaskNew implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
+      .append(getTeammId())
       .append(getTitle())
       .append(getBody())
       .append(getState())
@@ -94,8 +104,9 @@ public final class TaskNew implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("TaskNew {")
+      .append("Task {")
       .append("id=" + String.valueOf(getId()) + ", ")
+      .append("teammID=" + String.valueOf(getTeammId()) + ", ")
       .append("title=" + String.valueOf(getTitle()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
@@ -105,7 +116,7 @@ public final class TaskNew implements Model {
       .toString();
   }
   
-  public static TitleStep builder() {
+  public static TeammIdStep builder() {
       return new Builder();
   }
   
@@ -118,7 +129,7 @@ public final class TaskNew implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static TaskNew justId(String id) {
+  public static Task justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -128,8 +139,9 @@ public final class TaskNew implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new TaskNew(
+    return new Task(
       id,
+      null,
       null,
       null,
       null
@@ -138,10 +150,16 @@ public final class TaskNew implements Model {
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
+      teammID,
       title,
       body,
       state);
   }
+  public interface TeammIdStep {
+    TitleStep teammId(String teammId);
+  }
+  
+
   public interface TitleStep {
     BodyStep title(String title);
   }
@@ -158,25 +176,34 @@ public final class TaskNew implements Model {
   
 
   public interface BuildStep {
-    TaskNew build();
+    Task build();
     BuildStep id(String id) throws IllegalArgumentException;
   }
   
 
-  public static class Builder implements TitleStep, BodyStep, StateStep, BuildStep {
+  public static class Builder implements TeammIdStep, TitleStep, BodyStep, StateStep, BuildStep {
     private String id;
+    private String teammID;
     private String title;
     private String body;
     private String state;
     @Override
-     public TaskNew build() {
+     public Task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new TaskNew(
+        return new Task(
           id,
+          teammID,
           title,
           body,
           state);
+    }
+    
+    @Override
+     public TitleStep teammId(String teammId) {
+        Objects.requireNonNull(teammId);
+        this.teammID = teammId;
+        return this;
     }
     
     @Override
@@ -212,11 +239,17 @@ public final class TaskNew implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state) {
+    private CopyOfBuilder(String id, String teammId, String title, String body, String state) {
       super.id(id);
-      super.title(title)
+      super.teammId(teammId)
+        .title(title)
         .body(body)
         .state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder teammId(String teammId) {
+      return (CopyOfBuilder) super.teammId(teammId);
     }
     
     @Override

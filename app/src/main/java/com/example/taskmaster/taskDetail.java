@@ -23,8 +23,9 @@ public class taskDetail extends AppCompatActivity {
             super.onStart();
             Intent intent= getIntent();
             String name = intent.getExtras().getString("Name");
+            String team = intent.getExtras().getString("Team");
             TextView title = findViewById(R.id.titleTask);
-            title.setText(name);
+            title.setText("Team-"+team+" - "+name);
 
             String bodyText = intent.getExtras().getString("Body");
             TextView body = findViewById(R.id.taskBody);

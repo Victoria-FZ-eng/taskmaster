@@ -24,8 +24,10 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.model.query.Where;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
-import com.amplifyframework.datastore.generated.model.TaskNew;
+import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Teamm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         Button settingButton = findViewById(R.id.settings);
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SharedPreferences sharedName = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        String userName = sharedName.getString("userName","User Name");
+        String userName = sharedName.getString("userName", "User Name");
+        String teamIdFromSettings = sharedName.getString("Team-Id", "");
+        System.out.println("---------------- "+teamIdFromSettings);
 
         TextView textUserNameTask = findViewById(R.id.tskUser);
-        textUserNameTask.setText(userName+ "'s Tasks");
+        textUserNameTask.setText(userName + "'s Tasks");
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
         Handler handler = new Handler(Looper.getMainLooper(),
@@ -86,50 +89,86 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        List<TaskNew> allTasks=new ArrayList<>();
+        List<Task> allTasks = new ArrayList<>();
         allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
         System.out.println(allTasks.size());
-       // if (allTasks.size() != 0){
-            Amplify.API.query(
-                    ModelQuery.list(TaskNew.class),
-                    response -> {
-                        System.out.println("------------------------------------------------------------------");
-                        System.out.println(response.toString());
-                        for (TaskNew task : response.getData()) {
-                            Log.i("MyAmplifyApp",task.getTitle());
-                            Log.i("MyAmplifyApp",task.getBody());
-                            Log.i("MyAmplifyApp",task.getState());
 
-                            allTasks.add(task);
-                            System.out.println(task);
+//            Amplify.API.query(
+//                    ModelQuery.list(Task.class
+////                            , Task.TEAMM_ID.gt(teamIdFromSettings)
+//                    ),
+//                    response -> {
+//                        System.out.println("------------------------INSIDE API-QUERY------------------------------------------");
+//                        System.out.println(response.toString());
+//                        for (Task task : response.getData()) {
+//                            if(task.getTeammId() == teamIdFromSettings){
+//                            Log.i("MyAmplifyApp", task.getTitle());
+//                            Log.i("MyAmplifyApp", task.getBody());
+//                            Log.i("MyAmplifyApp", task.getState());
+//
+//                            allTasks.add(task);
+//                            System.out.println(task);}
+//                        }
+//
+//                        handler.sendEmptyMessage(1);
+//                        //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
+//                        Log.i("MyAmplifyApp", "Out of Loop!");
+//
+//                    },
+//                    error -> Log.e("MyAmplifyApp", "Query failure", error)
+//            );
+
+        Amplify.API.query(
+                ModelQuery.list(Teamm.class),
+                response -> {
+                    System.out.println("--------INSIDE API-QUERY----------------------------------------------------------");
+                  //  System.out.println("tttttttttttttttttttttttttttttt");
+                    System.out.println(response.toString());
+                    for (Teamm team : response.getData().getItems()) {
+                        Log.i("MyAmplifyApp", team.getName());
+                        for (Task task : team.getTasks()) {
+                          //  System.out.println(task.getTitle());
+
+                            if (task.getTeammId().equals(teamIdFromSettings) ){
+                                Log.i("MyAmplifyApp", task.getTitle());
+                            Log.i("MyAmplifyApp", task.getBody());
+                            Log.i("MyAmplifyApp", task.getState());
+                                allTasks.add(task);
+                            System.out.println("based on id ----------------: "+task);
+
+                            }
                         }
+                        System.out.println("team after log.iiiiiiiiiiiii: "+team);
+                        System.out.println("tttttttttttttttttttttttttttttttttttttttttttt");
+                    }
 
-                        handler.sendEmptyMessage(1);
-                      //  allTasksRecyclerView.getAdapter().notifyDataSetChanged();
-                        Log.i("MyAmplifyApp","Out of Loop!");
+                    handler.sendEmptyMessage(1);
+                    Log.i("MyAmplifyApp", "Out of Loop!");
 
-                    },
-                    error -> Log.e("MyAmplifyApp", "Query failure", error)
-            );
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
 
-        Button addTask = findViewById(R.id.btn1);
-        addTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            Button addTask = findViewById(R.id.btn1);
+            addTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
-                addTaskPage.putExtra("number",String.valueOf(allTasks.size()));
-                startActivity(addTaskPage);
-            }
-        });
+                    Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
+                    addTaskPage.putExtra("number", String.valueOf(allTasks.size()));
+                    startActivity(addTaskPage);
+                }
+            });
 
-        System.out.println(allTasks);
+            System.out.println(allTasks);
+
+
     }
 
 
-    public void TaskListener(TaskNew task){
+    public void TaskListener(Task task){
         Intent intent = new Intent(MainActivity.this, taskDetail.class);
         intent.putExtra("details",task.getTitle()+" "+task.getBody()+" "+ task.getState());
 

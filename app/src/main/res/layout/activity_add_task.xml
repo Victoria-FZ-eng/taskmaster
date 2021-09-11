@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/btn3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="120dp"
+        android:layout_width="92dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="84dp"
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintVertical_bias="0.067" />
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
@@ -44,16 +44,16 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
-        android:layout_width="296dp"
-        android:layout_height="184dp"
+        android:layout_width="291dp"
+        android:layout_height="116dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.433"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintVertical_bias="0.136" />
+        app:layout_constraintVertical_bias="0.137" />
 
     <TextView
         android:id="@+id/textView2"
@@ -89,7 +89,7 @@
         app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintVertical_bias="0.245" />
 
     <TextView
         android:id="@+id/textView5"
@@ -101,7 +101,7 @@
         app:layout_constraintHorizontal_bias="0.165"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintVertical_bias="0.545" />
 
     <TextView
         android:id="@+id/textView6"
@@ -126,5 +126,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
         app:layout_constraintVertical_bias="0.666" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Team"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintVertical_bias="0.088" />
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:layout_width="333dp"
+        android:layout_height="86dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.409">
+
+        <RadioButton
+            android:id="@+id/radioButtonTeam1"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="Team-A" />
+
+        <RadioButton
+            android:id="@+id/radioButtonTeam2"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="Team-B" />
+
+        <RadioButton
+            android:id="@+id/radioButtonTeam3"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="Team-C" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
