@@ -25,8 +25,7 @@ import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
-import com.amplifyframework.datastore.generated.model.TaskNew;
-import com.amplifyframework.datastore.generated.model.Team;
+import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,18 +89,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        List<TaskNew> allTasks=new ArrayList<>();
+        List<Task> allTasks=new ArrayList<>();
         allTasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         allTasksRecyclerView.setAdapter(new TaskAdapter(allTasks));
 
         System.out.println(allTasks.size());
        // if (allTasks.size() != 0){
             Amplify.API.query(
-                    ModelQuery.list(TaskNew.class),
+                    ModelQuery.list(Task.class),
                     response -> {
                         System.out.println("------------------------------------------------------------------");
                         System.out.println(response.toString());
-                        for (TaskNew task : response.getData()) {
+                        for (Task task : response.getData()) {
                             Log.i("MyAmplifyApp",task.getTitle());
                             Log.i("MyAmplifyApp",task.getBody());
                             Log.i("MyAmplifyApp",task.getState());
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void TaskListener(TaskNew task){
+    public void TaskListener(Task task){
         Intent intent = new Intent(MainActivity.this, taskDetail.class);
         intent.putExtra("details",task.getTitle()+" "+task.getBody()+" "+ task.getState());
 

@@ -12,17 +12,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
-
-import com.amplifyframework.datastore.generated.model.TaskNew;
 
 public class addTask extends AppCompatActivity {
 
@@ -99,7 +97,7 @@ public class addTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TaskNew task = TaskNew.builder().teamId("")
+                Task task = Task.builder()
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)

@@ -9,22 +9,22 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amplifyframework.datastore.generated.model.TaskNew;
+import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    private  List<TaskNew> allTasks = new ArrayList<>() ;
+    private  List<Task> allTasks = new ArrayList<>() ;
 
 
-    public TaskAdapter(List<TaskNew> allTasks) {
+    public TaskAdapter(List<Task> allTasks) {
         this.allTasks = allTasks;
     }
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
 
 
-        public TaskNew task;
+        public Task task;
 
         View itemView;
 
