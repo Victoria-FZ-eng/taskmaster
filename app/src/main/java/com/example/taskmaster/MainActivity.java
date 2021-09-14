@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.query.Where;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
@@ -46,13 +47,27 @@ public class MainActivity extends AppCompatActivity {
         try {
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
         } catch (AmplifyException error) {
             Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
         }
+        Amplify.Auth.fetchAuthSession(
+                result -> Log.i("AmplifyQuickstart", result.toString()),
+                error -> Log.e("AmplifyQuickstart", error.toString())
+        );
 
+        Amplify.Auth.signInWithWebUI(
+                this,
+                result -> {
+                    Log.i("AuthQuickStart", result.toString());
+                    System.out.println("from UI Signing in ");
+                    System.out.println(Amplify.Auth.getCurrentUser().getUsername());
+                },
+                error -> Log.e("AuthQuickStart", error.toString())
+        );
 
     }
     @Override
