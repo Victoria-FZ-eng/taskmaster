@@ -23,6 +23,8 @@ import android.widget.TextView;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.auth.options.AuthSignOutOptions;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.query.Where;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
@@ -35,6 +37,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
+    String userName= "User";
     TextView textView;
     @SuppressLint("RestrictedApi")
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -46,12 +49,28 @@ public class MainActivity extends AppCompatActivity {
         try {
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
         } catch (AmplifyException error) {
             Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
         }
+//        Amplify.Auth.fetchAuthSession(
+//                result -> Log.i("AmplifyQuickstart", result.toString()),
+//                error -> Log.e("AmplifyQuickstart", error.toString())
+//        );
+
+
+        Amplify.Auth.signInWithWebUI(
+                MainActivity.this,
+                result -> {
+                    Log.i("AuthQuickStart", result.toString());
+                    System.out.println("from UI Signing in ");
+                },
+                error -> Log.e("AuthQuickStart", error.toString())
+        );
+
 
 
     }
@@ -60,6 +79,26 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
+        Amplify.Auth.fetchAuthSession(
+                result -> {
+                    Log.i("AmplifyQuickstart", result.toString());
+                    if(result.isSignedIn()){
+                     userName = Amplify.Auth.getCurrentUser().getUsername();
+                    TextView textUserNameTask = findViewById(R.id.tskUser);
+                    textUserNameTask.setText(userName+ "'s Tasks");
+    }else { Amplify.Auth.signInWithWebUI(
+                            MainActivity.this,
+                            result2 -> {
+                                Log.i("AuthQuickStart", result2.toString());
+                                System.out.println("from UI Signing in ");
+                                System.out.println(Amplify.Auth.getCurrentUser().getUsername());
+//                    userName=Amplify.Auth.getCurrentUser().getUsername();
+                            },
+                            error -> Log.e("AuthQuickStart", error.toString())
+                    );}
+                },
+                error -> Log.e("AmplifyQuickstart", error.toString())
+        );
 
         Button settingButton = findViewById(R.id.settings);
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +111,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SharedPreferences sharedName = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        String userName = sharedName.getString("userName", "User Name");
+
         String teamIdFromSettings = sharedName.getString("Team-Id", "");
         System.out.println("---------------- "+teamIdFromSettings);
 
-        TextView textUserNameTask = findViewById(R.id.tskUser);
-        textUserNameTask.setText(userName + "'s Tasks");
+
 
         RecyclerView allTasksRecyclerView = findViewById(R.id.recViewTask);
         Handler handler = new Handler(Looper.getMainLooper(),
@@ -163,6 +201,23 @@ public class MainActivity extends AppCompatActivity {
             });
 
             System.out.println(allTasks);
+
+            Button logout =findViewById(R.id.logout);
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Amplify.Auth.signOut(
+                            AuthSignOutOptions.builder().globalSignOut(true).build(),
+                            () -> {
+                                Log.i("AuthSignOut", "sign Out Successfully");
+                                System.out.println("signing out");
+                                finish();
+                                startActivity(getIntent());
+                            },
+                            error -> Log.i("AuthSignOut", String.valueOf(error))
+                    );
+                }
+            });
 
 
     }

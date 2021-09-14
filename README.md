@@ -1,5 +1,12 @@
 # taskmaster
 
+## Lab-36
+
+1- Add sign in with UI 
+![UI](./screenshots/36.1.png)
+2- sign out
+3- pass the userName
+
 ## Lab-33
 In this lab we used amplify @connection annotations and used queries and mutation , to have 3 hard coded teams , and have the tasks separated.
 
