@@ -3,9 +3,16 @@ package com.example.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amplifyframework.core.Amplify;
+
+import java.io.File;
 
 public class taskDetail extends AppCompatActivity {
 
@@ -34,6 +41,20 @@ public class taskDetail extends AppCompatActivity {
             String status = intent.getExtras().getString("State");
             TextView state = findViewById(R.id.taskState);
             state.setText(status);
+
+        ImageView uploadHere = findViewById(R.id.toUpload);
+
+        Amplify.Storage.downloadFile(
+                String.valueOf(title),
+                new File(getApplicationContext().getFilesDir() + "/download.jpg"),
+                result -> {
+                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile().getName());
+
+                    uploadHere.setImageBitmap(BitmapFactory.decodeFile(result.getFile().getPath()));
+                },
+                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+        );
+
         }
 
     public boolean onOptionsItemSelected(MenuItem item){

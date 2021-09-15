@@ -61,15 +61,15 @@ public class MainActivity extends AppCompatActivity {
 //                error -> Log.e("AmplifyQuickstart", error.toString())
 //        );
 
-
-        Amplify.Auth.signInWithWebUI(
-                MainActivity.this,
-                result -> {
-                    Log.i("AuthQuickStart", result.toString());
-                    System.out.println("from UI Signing in ");
-                },
-                error -> Log.e("AuthQuickStart", error.toString())
-        );
+//
+//        Amplify.Auth.signInWithWebUI(
+//                MainActivity.this,
+//                result -> {
+//                    Log.i("AuthQuickStart", result.toString());
+//                    System.out.println("from UI Signing in ");
+//                },
+//                error -> Log.e("AuthQuickStart", error.toString())
+//        );
 
 
 
@@ -79,26 +79,26 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         setContentView(R.layout.activity_main);
 
-        Amplify.Auth.fetchAuthSession(
-                result -> {
-                    Log.i("AmplifyQuickstart", result.toString());
-                    if(result.isSignedIn()){
-                     userName = Amplify.Auth.getCurrentUser().getUsername();
-                    TextView textUserNameTask = findViewById(R.id.tskUser);
-                    textUserNameTask.setText(userName+ "'s Tasks");
-    }else { Amplify.Auth.signInWithWebUI(
-                            MainActivity.this,
-                            result2 -> {
-                                Log.i("AuthQuickStart", result2.toString());
-                                System.out.println("from UI Signing in ");
-                                System.out.println(Amplify.Auth.getCurrentUser().getUsername());
-//                    userName=Amplify.Auth.getCurrentUser().getUsername();
-                            },
-                            error -> Log.e("AuthQuickStart", error.toString())
-                    );}
-                },
-                error -> Log.e("AmplifyQuickstart", error.toString())
-        );
+//        Amplify.Auth.fetchAuthSession(
+//                result -> {
+//                    Log.i("AmplifyQuickstart", result.toString());
+//                    if(result.isSignedIn()){
+//                     userName = Amplify.Auth.getCurrentUser().getUsername();
+//                    TextView textUserNameTask = findViewById(R.id.tskUser);
+//                    textUserNameTask.setText(userName+ "'s Tasks");
+//    }else { Amplify.Auth.signInWithWebUI(
+//                            MainActivity.this,
+//                            result2 -> {
+//                                Log.i("AuthQuickStart", result2.toString());
+//                                System.out.println("from UI Signing in ");
+//                                System.out.println(Amplify.Auth.getCurrentUser().getUsername());
+////                    userName=Amplify.Auth.getCurrentUser().getUsername();
+//                            },
+//                            error -> Log.e("AuthQuickStart", error.toString())
+//                    );}
+//                },
+//                error -> Log.e("AmplifyQuickstart", error.toString())
+//        );
 
         Button settingButton = findViewById(R.id.settings);
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -202,22 +202,22 @@ public class MainActivity extends AppCompatActivity {
 
             System.out.println(allTasks);
 
-            Button logout =findViewById(R.id.logout);
-            logout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Amplify.Auth.signOut(
-                            AuthSignOutOptions.builder().globalSignOut(true).build(),
-                            () -> {
-                                Log.i("AuthSignOut", "sign Out Successfully");
-                                System.out.println("signing out");
-                                finish();
-                                startActivity(getIntent());
-                            },
-                            error -> Log.i("AuthSignOut", String.valueOf(error))
-                    );
-                }
-            });
+//            Button logout =findViewById(R.id.logout);
+//            logout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Amplify.Auth.signOut(
+//                            AuthSignOutOptions.builder().globalSignOut(true).build(),
+//                            () -> {
+//                                Log.i("AuthSignOut", "sign Out Successfully");
+//                                System.out.println("signing out");
+//                                finish();
+//                                startActivity(getIntent());
+//                            },
+//                            error -> Log.i("AuthSignOut", String.valueOf(error))
+//                    );
+//                }
+//            });
 
 
     }
