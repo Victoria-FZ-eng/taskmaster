@@ -1,5 +1,6 @@
 package com.example.taskmaster;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,12 +21,17 @@ import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class addTask extends AppCompatActivity {
 
     String selected;
     private String team = "not selected";
+    private EditText titleText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class addTask extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        titleText = findViewById(R.id.editTextTextPersonName2);
 
     }
     @Override
@@ -44,8 +51,22 @@ public class addTask extends AppCompatActivity {
         Intent intent= getIntent();
         numberOfTasks.setText(intent.getExtras().getString("number"));
 
-        EditText titleText = findViewById(R.id.editTextTextPersonName2);
+
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
+
+        Button upload=findViewById(R.id.upload);
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pickFile=new Intent(Intent.ACTION_GET_CONTENT);
+                pickFile.setType("*/*");
+                pickFile=Intent.createChooser(pickFile,"Pick a Photo");
+                startActivityForResult(pickFile,1234);
+            }
+        });
+//        upload.setOnClickListener((v)->{
+//
+//        });
 
         Spinner spinner = findViewById(R.id.spinner);
         ArrayList<String> arrayList = new ArrayList<>();
@@ -130,5 +151,33 @@ public class addTask extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String key=titleText.getText().toString();
+        File exampleFile = new File(getApplicationContext().getFilesDir(), "title");
+        try {
+            InputStream inputStream=getContentResolver().openInputStream(data.getData());
+            OutputStream outputStream=new FileOutputStream(exampleFile);
+            byte[]buf=new byte[1024];
+            int len;
+            while ((len=inputStream.read(buf))>0){
+                outputStream.write(buf,0,len);
+            }
+            inputStream.close();
+            outputStream.close();
+
+        } catch (Exception exception) {
+            Log.e("MyAmplifyApp", "Upload failed", exception);
+        }
+
+        Amplify.Storage.uploadFile(
+                key,
+                exampleFile,
+                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+        );
     }
 }

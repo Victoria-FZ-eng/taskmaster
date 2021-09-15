@@ -1,5 +1,22 @@
 # taskmaster
 
+## Lab-37
+
+1. Click onn Add Task
+![add](./screenshots/37-1.jpg)
+
+2. Add title, description, select state and team , **upload a photo from your  phone and the press ADD
+
+![upload](./screenshots/37-2.jpg)
+
+3. here you can see that the task is successfully added
+![task](./screenshots/37-3.jpg)
+
+4.Click on the added task (photo2)
+![taskDetail](./screenshots/37-4.jpg)
+
+
+
 ## Lab-36
 
 1- Add sign in with UI 
