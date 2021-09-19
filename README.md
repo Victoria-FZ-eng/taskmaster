@@ -1,5 +1,24 @@
 # taskmaster
 
+## Lab-41
+Adding intent filter to get the shared text as a task description
+
+select text
+![select text](./screenshots/41-1.jpg)
+
+share
+![share](./screenshots/41-2.jpg)
+
+addTask launched
+![task](./screenshots/41-3.jpg)
+
+check description in the task
+![desc](./screenshots/41-4.jpg)
+
+
+## Lab-38
+add Notification
+
 ## Lab-37
 
 1. Click onn Add Task

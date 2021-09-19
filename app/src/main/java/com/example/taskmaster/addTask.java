@@ -121,7 +121,7 @@ public class addTask extends AppCompatActivity {
         teamB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Radio Button B -----------------------");
+                System.out.println("Radio Button B ------------");
                 team = "B";
             }
         });
