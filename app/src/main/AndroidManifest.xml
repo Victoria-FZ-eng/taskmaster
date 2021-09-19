@@ -12,7 +12,8 @@
         <activity android:name=".settings"></activity>
         <activity android:name=".taskDetail" />
         <activity android:name=".allTasks" />
-        <activity android:name=".addTask" >
+        <activity android:name=".addTask"
+            android:label="addTaskDescription">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
