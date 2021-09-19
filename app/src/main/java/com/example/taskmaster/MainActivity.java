@@ -35,12 +35,12 @@ import com.amplifyframework.auth.options.AuthSignOutOptions;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.query.Where;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
-//import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Teamm;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.android.gms.tasks.Task;
+//import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,19 +217,19 @@ public class MainActivity extends AppCompatActivity {
                 ModelQuery.list(Teamm.class),
                 response -> {
                     System.out.println("--------INSIDE API-QUERY----------------------------------------------------------");
-                  //  System.out.println("tttttttttttttttttttttttttttttt");
+                    //  System.out.println("tttttttttttttttttttttttttttttt");
                     System.out.println(response.toString());
                     for (Teamm team : response.getData().getItems()) {
                         Log.i("MyAmplifyApp", team.getName());
                         for (Task task : team.getTasks()) {
-                          //  System.out.println(task.getTitle());
+                            //  System.out.println(task.getTitle());
 
                             if (task.getTeammId().equals(teamIdFromSettings) ){
                                 Log.i("MyAmplifyApp", task.getTitle());
-                            Log.i("MyAmplifyApp", task.getBody());
-                            Log.i("MyAmplifyApp", task.getState());
+                                Log.i("MyAmplifyApp", task.getBody());
+                                Log.i("MyAmplifyApp", task.getState());
                                 allTasks.add(task);
-                            System.out.println("based on id ----------------: "+task);
+                                System.out.println("based on id ----------------: "+task);
 
                             }
                         }
@@ -244,18 +244,18 @@ public class MainActivity extends AppCompatActivity {
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
 
-            Button addTask = findViewById(R.id.btn1);
-            addTask.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        Button addTask = findViewById(R.id.btn1);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
-                    addTaskPage.putExtra("number", String.valueOf(allTasks.size()));
-                    startActivity(addTaskPage);
-                }
-            });
+                Intent addTaskPage = new Intent(MainActivity.this, addTask.class);
+                addTaskPage.putExtra("number", String.valueOf(allTasks.size()));
+                startActivity(addTaskPage);
+            }
+        });
 
-            System.out.println(allTasks);
+        System.out.println(allTasks);
 
 //            Button logout =findViewById(R.id.logout);
 //            logout.setOnClickListener(new View.OnClickListener() {

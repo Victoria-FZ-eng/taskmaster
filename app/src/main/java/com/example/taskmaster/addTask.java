@@ -32,6 +32,7 @@ public class addTask extends AppCompatActivity {
     String selected;
     private String team = "not selected";
     private EditText titleText;
+    private String desc ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,20 @@ public class addTask extends AppCompatActivity {
 
         titleText = findViewById(R.id.editTextTextPersonName2);
 
+        Intent getDesc = getIntent();
+
+        if (getDesc.getType() != null){
+            System.out.println("*******************GET FROM INTENT*************************");
+            System.out.println("************"+ getDesc.getType());
+            System.out.println("************"+ getDesc.getData());
+        }
+        if (getDesc.getType() != null && getDesc.getType().equals("text/plain")){
+            desc = getDesc.getExtras().get(Intent.EXTRA_TEXT).toString();
+            Log.i("test Desc",desc);
+        }
+
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -53,6 +67,9 @@ public class addTask extends AppCompatActivity {
 
 
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
+       if (desc != ""){
+           bodyText.setText(desc);
+       }
 
         Button upload=findViewById(R.id.upload);
         upload.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +99,7 @@ public class addTask extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tutorialsName = parent.getItemAtPosition(position).toString();
                 selected=tutorialsName;
-                Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
@@ -104,7 +121,7 @@ public class addTask extends AppCompatActivity {
         teamB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Radio Button B -----------------------");
+                System.out.println("Radio Button B ------------");
                 team = "B";
             }
         });
