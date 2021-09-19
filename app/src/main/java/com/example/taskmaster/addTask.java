@@ -32,6 +32,7 @@ public class addTask extends AppCompatActivity {
     String selected;
     private String team = "not selected";
     private EditText titleText;
+    private String desc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,12 @@ public class addTask extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         titleText = findViewById(R.id.editTextTextPersonName2);
+
+        Intent getDesc = getIntent();
+        if (getDesc.getType() != null && getDesc.getType().equals("test/plain")){
+            desc = getDesc.getExtras().get(Intent.EXTRA_TEXT).toString();
+            System.out.println("----------------------------- "+ desc);
+        }
 
     }
     @Override
