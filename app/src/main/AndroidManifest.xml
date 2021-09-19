@@ -12,7 +12,13 @@
         <activity android:name=".settings"></activity>
         <activity android:name=".taskDetail" />
         <activity android:name=".allTasks" />
-        <activity android:name=".addTask" />
+        <activity android:name=".addTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.amplifyframework.auth.cognito.activities.HostedUIRedirectActivity"
             android:exported="true">
