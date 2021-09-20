@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/btn3"
-        android:layout_width="50dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="80dp"
+        android:layout_width="85dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="56dp"
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -171,17 +171,17 @@
 
     <Button
         android:id="@+id/upload"
-        android:layout_width="104dp"
-        android:layout_height="36dp"
+        android:layout_width="138dp"
+        android:layout_height="40dp"
         android:text="Photo Upload"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toStartOf="@+id/btn3"
-        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio"
-        app:layout_constraintVertical_bias="0.452" />
+        app:layout_constraintVertical_bias="0.7" />
 
-<!--    <Button-->
+    <!--    <Button-->
 <!--        android:id="@+id/location"-->
 <!--        android:layout_width="102dp"-->
 <!--        android:layout_height="36dp"-->

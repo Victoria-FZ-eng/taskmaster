@@ -75,9 +75,9 @@ public class addTask extends AppCompatActivity {
             //    ActivityCompat#requestPermissions
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 110);
 
-            boolean x =ActivityCompat
+            boolean x = ActivityCompat
                     .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED
                     &&
@@ -92,7 +92,7 @@ public class addTask extends AppCompatActivity {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             System.out.println("**************************LOCATION permission*******************************");
-            System.out.println("**********check activity compact "+ x );
+            System.out.println("**********check activity compact " + x);
             return;
         }
 
@@ -106,9 +106,9 @@ public class addTask extends AppCompatActivity {
                             System.out.println("**************************LOCATION*******************************");
                             System.out.println(location.toString());
 
-                            longitude= location.getLongitude();
-                            latitude= location.getLatitude();
-                            System.out.println("Latitude: " + latitude+" - "+ "Longitude: " +
+                            longitude = location.getLongitude();
+                            latitude = location.getLatitude();
+                            System.out.println("Latitude: " + latitude + " - " + "Longitude: " +
                                     longitude);
                         }
                     }
@@ -125,21 +125,29 @@ public class addTask extends AppCompatActivity {
         super.onStart();
 
         TextView numberOfTasks = findViewById(R.id.num);
-        Intent intent= getIntent();
+        Intent intent = getIntent();
         numberOfTasks.setText(intent.getExtras().getString("number"));
 
 
         EditText bodyText = findViewById(R.id.editTextTextPersonName3);
-       if (desc != ""){
-           bodyText.setText(desc);
-       }
+        if (desc != "") {
+            bodyText.setText(desc);
+        }
 
-//       Button getLocation = findViewById(R.id.location);
-//       getLocation.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View v) {
-//               String lat = String.valueOf(latitude);
-//               String lon = String.valueOf(longitude);
+//        Button getLocation = findViewById(R.id.location);
+//        getLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (latitude == 0 & longitude == 0) {
+//
+//                   longitude= location.getLongitude();
+//                   latitude= location.getLatitude();
+//               }
+////               else{
+////                   String lat = String.valueOf(latitude);
+////                   String lon = String.valueOf(longitude);
+////               }
+//
 //           }
 //       });
 
