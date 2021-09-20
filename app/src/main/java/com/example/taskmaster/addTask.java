@@ -44,6 +44,8 @@ public class addTask extends AppCompatActivity {
     private EditText titleText;
     private String desc = "";
     private FusedLocationProviderClient fusedLocationClient;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +106,8 @@ public class addTask extends AppCompatActivity {
                             System.out.println("**************************LOCATION*******************************");
                             System.out.println(location.toString());
 
-                            double longitude= location.getLongitude();
-                            double latitude= location.getLatitude();
+                            longitude= location.getLongitude();
+                            latitude= location.getLatitude();
                             System.out.println("Latitude: " + latitude+" - "+ "Longitude: " +
                                     longitude);
                         }
@@ -131,6 +133,16 @@ public class addTask extends AppCompatActivity {
        if (desc != ""){
            bodyText.setText(desc);
        }
+
+       Button getLocation = findViewById(R.id.location);
+       getLocation.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String lat = String.valueOf(latitude);
+               String lon = String.valueOf(longitude);
+           }
+       });
+
 
         Button upload=findViewById(R.id.upload);
         upload.setOnClickListener(new View.OnClickListener() {
