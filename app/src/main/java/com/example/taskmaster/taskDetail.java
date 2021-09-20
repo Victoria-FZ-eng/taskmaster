@@ -45,6 +45,9 @@ public class taskDetail extends AppCompatActivity {
         ImageView uploadHere = findViewById(R.id.toUpload);
         System.out.println("-------------------"+name);
 
+        TextView location = findViewById(R.id.locationText);
+        //location.setText();
+
         Amplify.Storage.downloadFile(
                 name,
                 new File(getApplicationContext().getFilesDir() + "/download.jpg"),

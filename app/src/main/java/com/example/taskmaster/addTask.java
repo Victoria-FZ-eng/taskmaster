@@ -154,9 +154,6 @@ public class addTask extends AppCompatActivity {
                 startActivityForResult(pickFile,1234);
             }
         });
-//        upload.setOnClickListener((v)->{
-//
-//        });
 
         Spinner spinner = findViewById(R.id.spinner);
         ArrayList<String> arrayList = new ArrayList<>();
