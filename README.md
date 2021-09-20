@@ -1,5 +1,13 @@
 # taskmaster
 
+## Lab-42
+Getting user's location by google services. I used getLastLocation, firstly , adding permission , then when accessed , get location.
+
+![request permission](./screenshots/42-1.jpg)
+![getLocation](./screenshots/42-2.jpg)
+![retrieve data from schema](./screenshots/42-3.jpg)
+
+
 ## Lab-41
 Adding intent filter to get the shared text as a task description
 
