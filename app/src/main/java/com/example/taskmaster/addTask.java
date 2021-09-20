@@ -1,9 +1,14 @@
 package com.example.taskmaster;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +25,11 @@ import android.widget.Toast;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +42,8 @@ public class addTask extends AppCompatActivity {
     String selected;
     private String team = "not selected";
     private EditText titleText;
-    private String desc ="";
+    private String desc = "";
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +56,67 @@ public class addTask extends AppCompatActivity {
 
         Intent getDesc = getIntent();
 
-        if (getDesc.getType() != null){
+        if (getDesc.getType() != null) {
             System.out.println("*******************GET FROM INTENT*************************");
-            System.out.println("************"+ getDesc.getType());
-            System.out.println("************"+ getDesc.getData());
+            System.out.println("************" + getDesc.getType());
+            System.out.println("************" + getDesc.getData());
         }
-        if (getDesc.getType() != null && getDesc.getType().equals("text/plain")){
+        if (getDesc.getType() != null && getDesc.getType().equals("text/plain")) {
             desc = getDesc.getExtras().get(Intent.EXTRA_TEXT).toString();
-            Log.i("test Desc",desc);
+            Log.i("test Desc", desc);
         }
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+
+            boolean x =ActivityCompat
+                    .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED
+                    &&
+                    ActivityCompat
+                            .checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED;
+
+
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            System.out.println("**************************LOCATION permission*******************************");
+            System.out.println("**********check activity compact "+ x );
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            System.out.println("**************************LOCATION*******************************");
+                            System.out.println(location.toString());
+
+                            double longitude= location.getLongitude();
+                            double latitude= location.getLatitude();
+                            System.out.println("Latitude: " + latitude+" - "+ "Longitude: " +
+                                    longitude);
+                        }
+                    }
+
+                });
+
+//
+
     }
+
 
     @Override
     protected void onStart() {
