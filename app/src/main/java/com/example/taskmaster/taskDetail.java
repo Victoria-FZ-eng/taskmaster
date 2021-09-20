@@ -45,6 +45,11 @@ public class taskDetail extends AppCompatActivity {
         ImageView uploadHere = findViewById(R.id.toUpload);
         System.out.println("-------------------"+name);
 
+        String lat= intent.getExtras().getString("Latitude");
+        String lon= intent.getExtras().getString("Longitude");
+        TextView location = findViewById(R.id.locationText);
+        location.setText("Latitude: "+ lat +" - "+ "Longitude: "+lon);
+
         Amplify.Storage.downloadFile(
                 name,
                 new File(getApplicationContext().getFilesDir() + "/download.jpg"),

@@ -8,13 +8,13 @@
 
     <Button
         android:id="@+id/btn3"
-        android:layout_width="92dp"
-        android:layout_height="39dp"
-        android:layout_marginBottom="84dp"
+        android:layout_width="85dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="56dp"
         android:text="ADD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.836"
+        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -171,14 +171,26 @@
 
     <Button
         android:id="@+id/upload"
-        android:layout_width="128dp"
-        android:layout_height="42dp"
+        android:layout_width="138dp"
+        android:layout_height="40dp"
         android:text="Photo Upload"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toStartOf="@+id/btn3"
-        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="0.7" />
+
+    <!--    <Button-->
+<!--        android:id="@+id/location"-->
+<!--        android:layout_width="102dp"-->
+<!--        android:layout_height="36dp"-->
+<!--        android:text="Get Location"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btn3"-->
+<!--        app:layout_constraintHorizontal_bias="0.311"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/upload"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/radio"-->
+<!--        app:layout_constraintVertical_bias="0.23" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
