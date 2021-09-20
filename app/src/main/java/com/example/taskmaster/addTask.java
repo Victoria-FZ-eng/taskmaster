@@ -134,14 +134,14 @@ public class addTask extends AppCompatActivity {
            bodyText.setText(desc);
        }
 
-       Button getLocation = findViewById(R.id.location);
-       getLocation.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               String lat = String.valueOf(latitude);
-               String lon = String.valueOf(longitude);
-           }
-       });
+//       Button getLocation = findViewById(R.id.location);
+//       getLocation.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View v) {
+//               String lat = String.valueOf(latitude);
+//               String lon = String.valueOf(longitude);
+//           }
+//       });
 
 
         Button upload=findViewById(R.id.upload);
@@ -214,6 +214,8 @@ public class addTask extends AppCompatActivity {
                         .title(titleText.getText().toString())
                         .body(bodyText.getText().toString())
                         .state(selected)
+                        .latitude(String.valueOf(latitude))
+                        .longitude(String.valueOf(longitude))
                         .build();
 
                 System.out.println("-------------------------------------************************");

@@ -181,16 +181,16 @@
         app:layout_constraintTop_toBottomOf="@+id/radio"
         app:layout_constraintVertical_bias="0.452" />
 
-    <Button
-        android:id="@+id/location"
-        android:layout_width="102dp"
-        android:layout_height="36dp"
-        android:text="Get Location"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn3"
-        app:layout_constraintHorizontal_bias="0.311"
-        app:layout_constraintStart_toEndOf="@+id/upload"
-        app:layout_constraintTop_toBottomOf="@+id/radio"
-        app:layout_constraintVertical_bias="0.23" />
+<!--    <Button-->
+<!--        android:id="@+id/location"-->
+<!--        android:layout_width="102dp"-->
+<!--        android:layout_height="36dp"-->
+<!--        android:text="Get Location"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btn3"-->
+<!--        app:layout_constraintHorizontal_bias="0.311"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/upload"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/radio"-->
+<!--        app:layout_constraintVertical_bias="0.23" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
